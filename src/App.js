@@ -26,16 +26,16 @@ function HomePage() {
       <div className="order-2 lg:order-1">
         <img
           src="https://via.placeholder.com/600x800"
-          alt="Your Name"
+          alt="Emmanuel"
           width={600}
           height={800}
           className="rounded-lg shadow-lg"
         />
       </div>
       <div className="space-y-8 order-1 lg:order-2">
-        <p className="text-xl text-gray-400">hello / hola</p>
+        <p className="text-xl text-gray-400">Hello / Hola</p>
         <h2 className="text-5xl font-extrabold leading-tight">
-          I'm Your Name, a <span className="text-gray-300">civic UX Designer and Qualitative Researcher</span> committed to creating spatial justice through technology.
+          I'm Emmanuel, a <span className="text-gray-300">Tech-Finance Professional</span> committed to creating spatial justice through technology.
         </h2>
         <p className="text-lg text-gray-400 leading-relaxed">
           My journey in participatory design began as an urban designer leading community processes to transform streets into amenable spaces for children. My practice has grown to explore the intersections of policy, space, and technology.
