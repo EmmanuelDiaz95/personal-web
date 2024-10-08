@@ -7,5 +7,4 @@ module.exports = {
     extend: {},
   },
   plugins: [],
-  darkMode: 'class', // Add this line to use dark mode as a class
 }
