@@ -48,7 +48,7 @@ function HomePage() {
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
       <div className="order-2 lg:order-1">
         <img
-          src="https://via.placeholder.com/600x800"
+          src="/images/main_page.jpeg"
           alt="Emmanuel"
           width={600}
           height={800}
@@ -58,7 +58,7 @@ function HomePage() {
       <div className="space-y-8 order-1 lg:order-2">
         <p className="text-xl text-gray-400">Hello / Hola</p>
         <h2 className="text-5xl font-extrabold leading-tight">
-          I'm Emmanuel, a <span className="text-gray-300">Tech-Finance Professional</span> committed to creating spatial justice through technology.
+          I'm Emmanuel, a <span className="text-gray-500">Tech-Finance Professional</span> committed to creating spatial justice through technology.
         </h2>
         <p className="text-lg text-gray-400 leading-relaxed">
           My journey in participatory design began as an urban designer leading community processes to transform streets into amenable spaces for children. My practice has grown to explore the intersections of policy, space, and technology.
@@ -205,7 +205,7 @@ function ContactPage() {
             </div>
           </div>
           <div className="flex space-x-4 pt-4">
-            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="p-2 rounded-full bg-blue-900/30 hover:bg-blue-900/40 transition-colors">
+            <a href="https://www.linkedin.com/in/emmanuel-diaz-50643093/" target="_blank" rel="noopener noreferrer" className="p-2 rounded-full bg-blue-900/30 hover:bg-blue-900/40 transition-colors">
               <Linkedin className="w-5 h-5 text-blue-400" />
             </a>
             <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="p-2 rounded-full bg-blue-900/30 hover:bg-blue-900/40 transition-colors">
@@ -303,8 +303,8 @@ function App() {
   };
 
   return (
-    <div className={`min-h-screen transition-colors duration-300 ${darkMode ? 'bg-slate-900 text-white' : 'bg-white text-black'}`}>
-        <header className={`p-6 sticky top-0 z-10 ${darkMode ? 'bg-slate-900' : 'bg-white'}`}>
+    <div className={`min-h-screen transition-colors duration-300 ${darkMode ? 'bg-black text-white' : 'bg-white text-black'}`}>
+        <header className={`p-6 sticky top-0 z-10 ${darkMode ? 'bg-black' : 'bg-white'}`}>
           <nav className="flex justify-between items-center max-w-6xl mx-auto">
             <div className="flex space-x-4">
               <button onClick={() => setCurrentSection('home')} className={`px-4 py-2 rounded-full transition-colors ${currentSection === 'home' ? (darkMode ? 'bg-blue-900/30' : 'bg-blue-100') : 'hover:bg-blue-900/30 dark:hover:bg-blue-900/30'}`}>About</button>
@@ -348,11 +348,11 @@ function App() {
           {currentSection === 'contact' && <ContactPage />}
         </main>
 
-        <footer className={`fixed bottom-0 left-0 right-0 p-4 ${darkMode ? 'bg-slate-900' : 'bg-white'}`}>
+        <footer className={`fixed bottom-0 left-0 right-0 p-4 ${darkMode ? 'bg-black' : 'bg-white'}`}>
           <div className="flex justify-between max-w-6xl mx-auto">
             <p className="text-sm text-gray-400">© 2023 Emmanuel. All rights reserved.</p>
             <div className="flex space-x-4">
-              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-blue-400 transition-colors">
+              <a href="https://www.linkedin.com/in/emmanuel-diaz-50643093/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-blue-400 transition-colors">
                 <Linkedin className="w-5 h-5" />
               </a>
               <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-blue-400 transition-colors">
