@@ -7,7 +7,7 @@ test('renders navigation elements', () => {
   const projectsButton = screen.getByText(/projects/i);
   const blogButton = screen.getByText(/blog/i);
   const contactButton = screen.getByText(/contact/i);
-  
+
   expect(aboutButton).toBeInTheDocument();
   expect(projectsButton).toBeInTheDocument();
   expect(blogButton).toBeInTheDocument();
