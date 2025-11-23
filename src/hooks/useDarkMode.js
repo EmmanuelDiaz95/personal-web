@@ -12,7 +12,7 @@ export const useDarkMode = () => {
   }, [darkMode]);
 
   const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
+    setDarkMode((prev) => !prev);
   };
 
   return { darkMode, toggleDarkMode };

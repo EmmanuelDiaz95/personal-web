@@ -5,10 +5,12 @@ export const useSearch = () => {
   const [searchQuery, setSearchQuery] = useState('');
 
   const toggleSearch = () => {
-    setShowSearch(!showSearch);
-    if (showSearch) {
-      setSearchQuery('');
-    }
+    setShowSearch((prev) => {
+      if (prev) {
+        setSearchQuery('');
+      }
+      return !prev;
+    });
   };
 
   const handleSearch = (e) => {

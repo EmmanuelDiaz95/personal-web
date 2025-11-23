@@ -1,11 +1,12 @@
 import React from 'react';
 
-const NavButton = ({ section, currentSection, onClick, children }) => {
+const NavButton = ({ section, currentSection, onClick, onKeyDown, children }) => {
   const isActive = currentSection === section;
 
   return (
     <button
       onClick={onClick}
+      onKeyDown={onKeyDown}
       className={`px-4 py-2 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-black ${
         isActive ? 'bg-blue-900/30' : 'hover:bg-blue-900/30'
       }`}

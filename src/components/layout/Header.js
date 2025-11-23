@@ -4,7 +4,7 @@ import Navigation from './Navigation';
 
 const Header = ({ darkMode, currentSection, setCurrentSection, toggleDarkMode, toggleSearch }) => {
   return (
-    <header className={`p-6 sticky top-0 z-10 ${darkMode ? 'bg-black' : 'bg-white'}`}>
+    <header className={`p-6 sticky top-0 z-10 backdrop-blur-sm ${darkMode ? 'bg-black/90' : 'bg-white/90'}`}>
       <div className="flex justify-between items-center max-w-6xl mx-auto">
         <Navigation currentSection={currentSection} setCurrentSection={setCurrentSection} />
         <div className="flex items-center space-x-4">

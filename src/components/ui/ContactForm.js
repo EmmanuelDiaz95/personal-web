@@ -1,12 +1,19 @@
 import React, { useState } from 'react';
 
+const STATUS_TYPES = {
+  IDLE: 'idle',
+  LOADING: 'loading',
+  SUCCESS: 'success',
+  ERROR: 'error',
+};
+
 const ContactForm = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     message: '',
   });
-  const [submitStatus, setSubmitStatus] = useState('');
+  const [status, setStatus] = useState({ type: STATUS_TYPES.IDLE, message: '' });
 
   const handleInputChange = (e) => {
     const { id, value } = e.target;
@@ -26,31 +33,44 @@ const ContactForm = () => {
 
     // Validation
     if (!formData.name || !formData.email || !formData.message) {
-      setSubmitStatus('Please fill in all fields');
+      setStatus({ type: STATUS_TYPES.ERROR, message: 'Please fill in all fields' });
       return;
     }
 
     if (!validateEmail(formData.email)) {
-      setSubmitStatus('Please enter a valid email address');
+      setStatus({ type: STATUS_TYPES.ERROR, message: 'Please enter a valid email address' });
       return;
     }
 
     if (formData.message.length < 10) {
-      setSubmitStatus('Message must be at least 10 characters long');
+      setStatus({ type: STATUS_TYPES.ERROR, message: 'Message must be at least 10 characters long' });
       return;
     }
 
     // Simulate form submission
-    setSubmitStatus('Sending...');
+    setStatus({ type: STATUS_TYPES.LOADING, message: 'Sending...' });
     setTimeout(() => {
-      console.log('Form submitted:', formData);
-      setSubmitStatus('Message sent successfully!');
+      // TODO: Replace with actual form submission
+      setStatus({ type: STATUS_TYPES.SUCCESS, message: 'Message sent successfully!' });
       setFormData({ name: '', email: '', message: '' });
 
       setTimeout(() => {
-        setSubmitStatus('');
+        setStatus({ type: STATUS_TYPES.IDLE, message: '' });
       }, 3000);
     }, 1000);
+  };
+
+  const getStatusClassName = () => {
+    switch (status.type) {
+      case STATUS_TYPES.SUCCESS:
+        return 'text-green-400';
+      case STATUS_TYPES.ERROR:
+        return 'text-red-400';
+      case STATUS_TYPES.LOADING:
+        return 'text-blue-400';
+      default:
+        return '';
+    }
   };
 
   return (
@@ -66,6 +86,7 @@ const ContactForm = () => {
           onChange={handleInputChange}
           className="w-full px-4 py-2 bg-blue-900/30 border border-blue-800/50 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 text-white"
           placeholder="Your name"
+          required
           aria-required="true"
         />
       </div>
@@ -80,6 +101,7 @@ const ContactForm = () => {
           onChange={handleInputChange}
           className="w-full px-4 py-2 bg-blue-900/30 border border-blue-800/50 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 text-white"
           placeholder="your.email@example.com"
+          required
           aria-required="true"
         />
       </div>
@@ -94,32 +116,22 @@ const ContactForm = () => {
           onChange={handleInputChange}
           className="w-full px-4 py-2 bg-blue-900/30 border border-blue-800/50 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 text-white"
           placeholder="Your message (minimum 10 characters)"
+          required
+          minLength={10}
           aria-required="true"
         ></textarea>
       </div>
-      {submitStatus && (
-        <div
-          className={`text-sm ${
-            submitStatus.includes('successfully')
-              ? 'text-green-400'
-              : submitStatus.includes('Please') ||
-                  submitStatus.includes('valid') ||
-                  submitStatus.includes('must')
-                ? 'text-red-400'
-                : 'text-blue-400'
-          }`}
-          role="alert"
-          aria-live="polite"
-        >
-          {submitStatus}
+      {status.message && (
+        <div className={`text-sm ${getStatusClassName()}`} role="alert" aria-live="polite">
+          {status.message}
         </div>
       )}
       <button
         type="submit"
-        disabled={submitStatus === 'Sending...'}
+        disabled={status.type === STATUS_TYPES.LOADING}
         className="w-full px-6 py-3 bg-blue-800 text-white rounded-md hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-black"
       >
-        {submitStatus === 'Sending...' ? 'Sending...' : 'Send Message'}
+        {status.type === STATUS_TYPES.LOADING ? 'Sending...' : 'Send Message'}
       </button>
     </form>
   );
