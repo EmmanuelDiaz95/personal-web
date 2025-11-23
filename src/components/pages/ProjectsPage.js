@@ -10,8 +10,7 @@ const ProjectsPage = () => {
           PROJECTS
         </h1>
         <p className="text-xl text-gray-400">
-          UX design, research projects, and participatory urban design work, spanning and melding
-          the physical and the digital.
+        Where curiosity meets action—projects exploring technology, automation, and what's possible.
         </p>
       </header>
       <div className="grid md:grid-cols-2 gap-16">

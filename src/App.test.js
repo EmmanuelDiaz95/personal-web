@@ -3,15 +3,13 @@ import App from './App';
 
 test('renders navigation elements', () => {
   render(<App />);
-  const aboutButton = screen.getByText(/about/i);
-  const projectsButton = screen.getByText(/projects/i);
-  const blogButton = screen.getByText(/blog/i);
-  const contactButton = screen.getByText(/contact/i);
+  const nav = screen.getByRole('navigation', { name: /main navigation/i });
 
-  expect(aboutButton).toBeInTheDocument();
-  expect(projectsButton).toBeInTheDocument();
-  expect(blogButton).toBeInTheDocument();
-  expect(contactButton).toBeInTheDocument();
+  expect(nav).toBeInTheDocument();
+  expect(screen.getByRole('link', { name: /about/i })).toBeInTheDocument();
+  expect(screen.getByRole('link', { name: /projects/i })).toBeInTheDocument();
+  expect(screen.getByRole('link', { name: /blog/i })).toBeInTheDocument();
+  expect(screen.getByRole('link', { name: /contact/i })).toBeInTheDocument();
 });
 
 test('renders main heading on home page', () => {
