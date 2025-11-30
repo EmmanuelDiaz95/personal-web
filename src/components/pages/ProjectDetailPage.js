@@ -71,9 +71,9 @@ const ProjectDetailPage = () => {
       <section className="mb-12">
         <h2 className="text-2xl font-bold mb-4">Methods & Tools</h2>
         <div className="flex flex-wrap gap-2">
-          {project.methods.split(', ').map((method, index) => (
+          {project.methods.split(', ').map((method) => (
             <span
-              key={index}
+              key={method}
               className="px-3 py-1 bg-blue-800/50 text-sm rounded-full"
             >
               {method}
@@ -89,8 +89,8 @@ const ProjectDetailPage = () => {
           {project.fullDescription
             .trim()
             .split('\n\n')
-            .map((paragraph, index) => (
-              <p key={index}>{paragraph.trim()}</p>
+            .map((paragraph) => (
+              <p key={paragraph.substring(0, 50)}>{paragraph.trim()}</p>
             ))}
         </div>
       </section>
@@ -100,8 +100,8 @@ const ProjectDetailPage = () => {
         <section className="mb-12">
           <h2 className="text-2xl font-bold mb-4">Key Outcomes</h2>
           <ul className="space-y-3">
-            {project.outcomes.map((outcome, index) => (
-              <li key={index} className="flex items-start gap-3">
+            {project.outcomes.map((outcome) => (
+              <li key={outcome} className="flex items-start gap-3">
                 <span className="text-blue-400 mt-1">•</span>
                 <span className="text-gray-400">{outcome}</span>
               </li>

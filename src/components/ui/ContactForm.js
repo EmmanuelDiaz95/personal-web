@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 
 const STATUS_TYPES = {
   IDLE: 'idle',
@@ -15,52 +15,58 @@ const ContactForm = () => {
   });
   const [status, setStatus] = useState({ type: STATUS_TYPES.IDLE, message: '' });
 
-  const handleInputChange = (e) => {
+  const handleInputChange = useCallback((e) => {
     const { id, value } = e.target;
     setFormData((prev) => ({
       ...prev,
       [id]: value,
     }));
-  };
+  }, []);
 
-  const validateEmail = (email) => {
+  const validateEmail = useCallback((email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
-  };
+  }, []);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
 
-    // Validation
-    if (!formData.name || !formData.email || !formData.message) {
-      setStatus({ type: STATUS_TYPES.ERROR, message: 'Please fill in all fields' });
-      return;
-    }
+      // Validation
+      if (!formData.name || !formData.email || !formData.message) {
+        setStatus({ type: STATUS_TYPES.ERROR, message: 'Please fill in all fields' });
+        return;
+      }
 
-    if (!validateEmail(formData.email)) {
-      setStatus({ type: STATUS_TYPES.ERROR, message: 'Please enter a valid email address' });
-      return;
-    }
+      if (!validateEmail(formData.email)) {
+        setStatus({ type: STATUS_TYPES.ERROR, message: 'Please enter a valid email address' });
+        return;
+      }
 
-    if (formData.message.length < 10) {
-      setStatus({ type: STATUS_TYPES.ERROR, message: 'Message must be at least 10 characters long' });
-      return;
-    }
+      if (formData.message.length < 10) {
+        setStatus({
+          type: STATUS_TYPES.ERROR,
+          message: 'Message must be at least 10 characters long',
+        });
+        return;
+      }
 
-    // Simulate form submission
-    setStatus({ type: STATUS_TYPES.LOADING, message: 'Sending...' });
-    setTimeout(() => {
-      // TODO: Replace with actual form submission
-      setStatus({ type: STATUS_TYPES.SUCCESS, message: 'Message sent successfully!' });
-      setFormData({ name: '', email: '', message: '' });
-
+      // Simulate form submission
+      setStatus({ type: STATUS_TYPES.LOADING, message: 'Sending...' });
       setTimeout(() => {
-        setStatus({ type: STATUS_TYPES.IDLE, message: '' });
-      }, 3000);
-    }, 1000);
-  };
+        // TODO: Replace with actual form submission
+        setStatus({ type: STATUS_TYPES.SUCCESS, message: 'Message sent successfully!' });
+        setFormData({ name: '', email: '', message: '' });
 
-  const getStatusClassName = () => {
+        setTimeout(() => {
+          setStatus({ type: STATUS_TYPES.IDLE, message: '' });
+        }, 3000);
+      }, 1000);
+    },
+    [formData, validateEmail]
+  );
+
+  const statusClassName = useMemo(() => {
     switch (status.type) {
       case STATUS_TYPES.SUCCESS:
         return 'text-green-400';
@@ -71,7 +77,7 @@ const ContactForm = () => {
       default:
         return '';
     }
-  };
+  }, [status.type]);
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6" aria-label="Contact form">
@@ -122,7 +128,7 @@ const ContactForm = () => {
         ></textarea>
       </div>
       {status.message && (
-        <div className={`text-sm ${getStatusClassName()}`} role="alert" aria-live="polite">
+        <div className={`text-sm ${statusClassName}`} role="alert" aria-live="polite">
           {status.message}
         </div>
       )}

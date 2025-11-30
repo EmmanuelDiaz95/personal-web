@@ -1,5 +1,6 @@
 import React from 'react';
 import { Linkedin, Github, Twitter } from 'lucide-react';
+import { useTheme } from '../../contexts/ThemeContext';
 import { SOCIAL_LINKS, CURRENT_YEAR } from '../../data/constants';
 
 const SocialLink = ({ href, icon: Icon, label }) => (
@@ -14,7 +15,9 @@ const SocialLink = ({ href, icon: Icon, label }) => (
   </a>
 );
 
-const Footer = ({ darkMode }) => {
+const Footer = () => {
+  const { darkMode } = useTheme();
+
   return (
     <footer
       className={`fixed bottom-0 left-0 right-0 p-4 ${darkMode ? 'bg-black' : 'bg-white'} border-t ${darkMode ? 'border-gray-800' : 'border-gray-200'}`}

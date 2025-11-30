@@ -1,8 +1,11 @@
 import React from 'react';
 import { Sun, Moon, Search } from 'lucide-react';
+import { useTheme } from '../../contexts/ThemeContext';
 import Navigation from './Navigation';
 
-const Header = ({ darkMode, toggleDarkMode, toggleSearch }) => {
+const Header = ({ toggleSearch }) => {
+  const { darkMode, toggleDarkMode } = useTheme();
+
   return (
     <header
       className={`p-6 sticky top-0 z-10 backdrop-blur-sm ${darkMode ? 'bg-black/90' : 'bg-white/90'}`}

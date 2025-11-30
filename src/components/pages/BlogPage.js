@@ -15,8 +15,8 @@ const BlogPage = () => {
         </p>
       </header>
       <div className="grid md:grid-cols-1 gap-8">
-        {blogPosts.map((post, index) => (
-          <BlogPostCard key={index} post={post} />
+        {blogPosts.map((post) => (
+          <BlogPostCard key={post.id} post={post} />
         ))}
       </div>
     </section>

@@ -1,7 +1,10 @@
 import React from 'react';
 import { Search } from 'lucide-react';
+import { useTheme } from '../../contexts/ThemeContext';
 
-const SearchBar = ({ showSearch, searchQuery, setSearchQuery, handleSearch, darkMode }) => {
+const SearchBar = ({ showSearch, searchQuery, setSearchQuery, handleSearch }) => {
+  const { darkMode } = useTheme();
+
   if (!showSearch) return null;
 
   return (
