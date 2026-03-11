@@ -1,0 +1,107 @@
+<h2>Navigation & Landing Structure</h2>
+<p class="subtitle">Projects is your landing page. How should the navigation feel?</p>
+
+<div class="cards">
+
+  <!-- Option A: Top bar minimal -->
+  <div class="card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="card-image" style="background: #0a0a0a; padding: 20px; min-height: 280px; font-family: 'SF Mono', 'Fira Code', monospace;">
+      <div style="border-bottom: 1px solid #333; padding-bottom: 12px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
+        <span style="color: #fff; font-size: 14px; letter-spacing: 2px;">EMMANUEL DIAZ</span>
+        <div style="display: flex; gap: 24px; font-size: 12px; color: #666;">
+          <span style="color: #fff; border-bottom: 1px solid #fff; padding-bottom: 2px;">Projects</span>
+          <span>Blog</span>
+          <span>Experience</span>
+          <span style="font-size: 16px;">&#9681;</span>
+        </div>
+      </div>
+      <div style="margin-top: 30px;">
+        <div style="font-size: 11px; color: #555; letter-spacing: 3px; margin-bottom: 8px;">SELECTED WORK</div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px;">
+          <div style="background: #151515; border: 1px solid #222; border-radius: 4px; padding: 16px;">
+            <div style="font-size: 10px; color: #444; margin-bottom: 6px;">01</div>
+            <div style="color: #fff; font-size: 13px;">Choice Empowers</div>
+            <div style="font-size: 10px; color: #555; margin-top: 4px;">shipped</div>
+          </div>
+          <div style="background: #151515; border: 1px solid #222; border-radius: 4px; padding: 16px;">
+            <div style="font-size: 10px; color: #444; margin-bottom: 6px;">02</div>
+            <div style="color: #fff; font-size: 13px;">Proyectos Productivos</div>
+            <div style="font-size: 10px; color: #555; margin-top: 4px;">shipped</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A: Horizontal Top Bar</h3>
+      <p>Clean horizontal nav. Name left, links right. EINCODE-style. Sticky on scroll. Minimal and functional.</p>
+    </div>
+  </div>
+
+  <!-- Option B: Side nav -->
+  <div class="card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="card-image" style="background: #0a0a0a; padding: 20px; min-height: 280px; font-family: 'SF Mono', 'Fira Code', monospace; display: flex;">
+      <div style="width: 160px; border-right: 1px solid #1a1a1a; padding-right: 16px; flex-shrink: 0;">
+        <div style="color: #fff; font-size: 14px; letter-spacing: 2px; margin-bottom: 30px;">ED</div>
+        <div style="display: flex; flex-direction: column; gap: 16px; font-size: 12px;">
+          <span style="color: #fff;">Projects</span>
+          <span style="color: #555;">Blog</span>
+          <span style="color: #555;">Experience</span>
+        </div>
+        <div style="margin-top: 40px; font-size: 16px; color: #555;">&#9681;</div>
+      </div>
+      <div style="flex: 1; padding-left: 20px;">
+        <div style="font-size: 11px; color: #555; letter-spacing: 3px; margin-bottom: 16px;">SELECTED WORK</div>
+        <div style="background: #151515; border: 1px solid #222; border-radius: 4px; padding: 16px; margin-bottom: 10px;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div style="color: #fff; font-size: 13px;">Choice Empowers</div>
+            <div style="font-size: 10px; color: #555;">shipped</div>
+          </div>
+        </div>
+        <div style="background: #151515; border: 1px solid #222; border-radius: 4px; padding: 16px;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div style="color: #fff; font-size: 13px;">Proyectos Productivos</div>
+            <div style="font-size: 10px; color: #555;">shipped</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B: Fixed Side Navigation</h3>
+      <p>Vertical nav pinned to the left. Content fills the right. More editorial, magazine-like. Closer to "The Future of Black" reference.</p>
+    </div>
+  </div>
+
+  <!-- Option C: Minimal header + footer nav -->
+  <div class="card" data-choice="c" onclick="toggleSelect(this)">
+    <div class="card-image" style="background: #0a0a0a; padding: 20px; min-height: 280px; font-family: 'SF Mono', 'Fira Code', monospace; display: flex; flex-direction: column; justify-content: space-between;">
+      <div>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+          <span style="color: #fff; font-size: 14px; letter-spacing: 2px;">EMMANUEL DIAZ</span>
+          <span style="font-size: 16px; color: #666;">&#9681;</span>
+        </div>
+        <div style="font-size: 11px; color: #555; letter-spacing: 3px; margin-bottom: 16px;">PROJECTS</div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+          <div style="background: #151515; border: 1px solid #222; border-radius: 4px; padding: 16px;">
+            <div style="color: #fff; font-size: 13px;">Choice Empowers</div>
+            <div style="font-size: 10px; color: #555; margin-top: 4px;">shipped</div>
+          </div>
+          <div style="background: #151515; border: 1px solid #222; border-radius: 4px; padding: 16px;">
+            <div style="color: #fff; font-size: 13px;">Proyectos Productivos</div>
+            <div style="font-size: 10px; color: #555; margin-top: 4px;">shipped</div>
+          </div>
+        </div>
+      </div>
+      <div style="border-top: 1px solid #222; padding-top: 12px; display: flex; gap: 24px; font-size: 12px; color: #555;">
+        <span style="color: #fff;">Projects</span>
+        <span>Blog</span>
+        <span>Experience</span>
+        <span style="margin-left: auto; font-size: 10px;">emmanueldc95@hotmail.com</span>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>C: Name Header + Bottom Nav</h3>
+      <p>Just your name at the top. Navigation lives at the bottom as a persistent bar. Content-first approach — maximum space for your work. Ultra-minimal.</p>
+    </div>
+  </div>
+
+</div>

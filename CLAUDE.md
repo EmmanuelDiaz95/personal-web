@@ -2,94 +2,78 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## Development Setup
+## Project Overview
 
-This is a React-based personal portfolio website built with Create React App and styled with Tailwind CSS.
+React personal portfolio website (Create React App + Tailwind CSS) for a UX designer based in Monterrey, Mexico. Showcases projects and blog posts.
 
-### Required Node.js Version
-- Node.js >= 14.17.0 (use nvm if available)
+## Development Commands
 
-### Development Commands
-- `npm run setup` - Clean environment and install dependencies (removes node_modules, clears cache)
-- `npm start` - Start development server (typically runs on localhost:3000)
-- `npm run build` - Create production build
-- `npm test` - Run test suite with Jest
-- `npm run eject` - Eject from Create React App (irreversible)
+- `npm start` - Dev server on localhost:3000
+- `npm run build` - Production build
+- `npm test` - Run tests with Jest (interactive watch mode; use `npm test -- --watchAll=false` for single run)
+- `npm test -- --testPathPattern=App.test` - Run a single test file
+- `npm run lint` - ESLint check
+- `npm run lint:fix` - ESLint auto-fix
+- `npm run format` - Prettier format
+- `npm run format:check` - Prettier check
+- `npm run setup` - Nuclear reinstall (deletes node_modules, clears cache, reinstalls)
 
-### Environment Setup Issues
-If encountering installation or dependency issues:
-1. Delete `node_modules` folder
-2. Run `npm cache clean --force`
-3. Run `npm install`
+Node.js >= 14.17.0 required.
 
-## Architecture Overview
+## Architecture
 
-### Single Page Application Structure
-The app uses React Router but implements a custom navigation system with state-based section switching rather than traditional routing. All content sections (Home, Projects, Blog, Contact) are rendered conditionally based on `currentSection` state.
+### Routing & Code Splitting
 
-### Key Components
-- **App.js**: Main component containing all page sections as functions
-  - `HomePage()` - About/bio section with hero layout
-  - `ProjectsPage()` - UX/design project showcase
-  - `BlogPage()` - Blog posts with categorization
-  - `ContactPage()` - Contact form and social links
-- **Navigation**: Custom button-based navigation (not Link components)
-- **Theme**: Dark mode enabled by default with toggle functionality
+`App.js` is the top-level component. It wraps everything in `ThemeProvider` > `BrowserRouter` > `AppContent`. All page components are lazy-loaded via `React.lazy()` with a shared `Suspense` fallback. Routes:
 
-### Styling Architecture
-- **Tailwind CSS**: Primary styling framework
-- **PostCSS**: Build tool integration via `postcss.config.js`
-- **Dark Mode**: Controlled via React state with `document.documentElement.classList`
-- **Responsive Design**: Mobile-first approach with breakpoint prefixes (lg:, md:)
+- `/` `/projects` `/projects/:slug` `/blog` `/blog/:slug` `/contact` `*` (404)
 
-### Data Structure
-Static data arrays defined in App.js:
-- `projects[]` - Portfolio projects with metadata (title, description, role, methods)
-- `blogPosts[]` - Blog entries with categorization and reading time
+### Component Organization
 
-### Dependencies
-- **React 18.3.1** with Router DOM 6.26.2
-- **Tailwind CSS 3.x** with PostCSS and Autoprefixer
-- **Lucide React** for iconography
-- **Testing Library** suite for testing
+- `src/components/layout/` — Header, Footer, Navigation (shared shell, always rendered)
+- `src/components/pages/` — One component per route, all lazy-loaded
+- `src/components/ui/` — Reusable pieces: ProjectCard, BlogPostCard, SearchBar, ContactForm
 
-## Development Notes
+### Data Layer
 
-### Navigation Behavior
-The app uses simple state-based navigation with `setCurrentSection()` state changes. This means:
-- No URL changes when navigating
-- No browser back/forward functionality
-- All sections mount/unmount on navigation
-- React Router has been removed as it was not being used properly
+No backend. Content lives in static JS files under `src/data/`:
+- `projects.js` — Array of project objects with `slug` field; exported `getProjectBySlug()` helper
+- `blogPosts.js` — Array of blog post objects with `slug` field
+- `constants.js` — Contact info, social links, current year
 
-### Dark Mode Implementation
-Dark mode is enabled by default and toggleable via state. The implementation:
-- Uses `document.documentElement.classList` for Tailwind dark mode
-- Properly removes/adds 'dark' class based on state
-- Component-level conditional styling for theme switching
+Detail pages look up content by matching the `:slug` route param against these arrays. If no match, they redirect to 404.
 
-### Contact Form
-The contact form now includes:
-- Form validation (requires all fields)
-- Simulated submission with loading states
-- Success/error message display
-- Form reset after successful submission
-- Data is logged to console (placeholder for real submission)
+### Dark Mode
 
-### Search Functionality
-Search feature includes:
-- Toggle search bar via search icon
-- Form submission shows alert with search query
-- Auto-focus when search bar opens
-- Placeholder functionality for future implementation
+`ThemeContext` wraps the app and exposes `darkMode` boolean + `toggleDarkMode`. The `useDarkMode` hook manages state and toggles the `dark` class on `document.documentElement`. Tailwind is configured with `darkMode: 'class'`. Default is dark mode on. Note: localStorage persistence is referenced in the hook name but not currently implemented — state resets on refresh.
 
-### Image Placeholders
-All images currently use placeholder URLs (`https://via.placeholder.com/`) and will need to be replaced with actual assets.
+### Styling
 
-### Recent Fixes Applied
-- Removed duplicate dependencies from package.json
-- Fixed dark mode toggle logic
-- Removed unused React Router dependency
-- Added functional contact form with validation
-- Added search functionality placeholder
-- Updated tests to match current content
+All styling is Tailwind utility classes. Dark mode uses conditional class strings (e.g., `darkMode ? 'bg-black text-white' : 'bg-white text-black'`) rather than Tailwind's `dark:` variant, because the dark state comes from React context, not just the CSS class.
+
+### Icons
+
+Uses `lucide-react` for all icons.
+
+### Search
+
+`useSearch` hook (used at the `AppContent` level) provides real search across projects and blog posts. Searches title, description, methods (projects) and title, excerpt, category (blog posts). Single result navigates directly; multiple results navigates to first match; no results shows an alert.
+
+### Testing
+
+Minimal test coverage — only `src/App.test.js` exists, testing navigation rendering and the home page heading. Uses `@testing-library/react`.
+
+## Code Style
+
+Prettier: single quotes, 100-char print width, trailing commas (ES5), semicolons, LF line endings.
+
+ESLint notable rules:
+- `no-console: warn` (console.warn/error allowed)
+- `no-unused-vars: warn` (prefix with `_` to suppress)
+- `react/prop-types: off`
+- `jsx-a11y` plugin — accessibility rules enforced as warnings
+
+## Key Patterns
+
+- All images are placeholders (`via.placeholder.com`) — replace with real assets
+- Contact form has validation and simulated submission (console.log only, no backend)

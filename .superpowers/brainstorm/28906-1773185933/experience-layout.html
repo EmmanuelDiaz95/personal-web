@@ -1,0 +1,241 @@
+<h2>Experience Section Layout</h2>
+<p class="subtitle">Your career timeline: BlackRock, Daimler, Nubank, Nowports, Mundi, Rappi, Concourse, Vaas, Cascade Debt. How to present it?</p>
+
+<div class="cards">
+
+  <!-- Option A: Vertical timeline -->
+  <div class="card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="card-image" style="background: #0a0a0a; padding: 24px; min-height: 360px; font-family: 'SF Mono', 'Fira Code', monospace;">
+      <!-- Header -->
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <span style="color: #fff; font-size: 14px; letter-spacing: 2px;">EMMANUEL DIAZ</span>
+        <span style="font-size: 14px; color: #555;">&#9681;</span>
+      </div>
+      <div style="font-size: 11px; color: #555; letter-spacing: 3px; margin-bottom: 16px;">EXPERIENCE</div>
+      <!-- Brief summary -->
+      <div style="font-size: 9px; color: #666; line-height: 1.6; margin-bottom: 20px; max-width: 400px;">
+        7+ years building treasury and finance systems from scratch at high-growth startups across Latin America. 8+ countries. Bilingual.
+      </div>
+      <!-- Timeline -->
+      <div style="display: flex; gap: 0; flex-direction: column; padding-left: 16px; border-left: 1px solid #1a1a1a;">
+        <div style="position: relative; padding-left: 20px; padding-bottom: 16px;">
+          <div style="position: absolute; left: -5px; top: 2px; width: 8px; height: 8px; border-radius: 50%; background: #fff;"></div>
+          <div style="display: flex; justify-content: space-between; align-items: baseline;">
+            <div style="color: #fff; font-size: 11px; font-weight: 500;">Capital Markets Ops Manager</div>
+            <div style="font-size: 8px; color: #444;">2025–now</div>
+          </div>
+          <div style="font-size: 9px; color: #666; margin-top: 2px;">Cascade Debt</div>
+          <div style="font-size: 8px; color: #444; margin-top: 4px;">Cross-border ops across MX, Indonesia, North America</div>
+        </div>
+        <div style="position: relative; padding-left: 20px; padding-bottom: 16px;">
+          <div style="position: absolute; left: -5px; top: 2px; width: 8px; height: 8px; border-radius: 50%; background: #555;"></div>
+          <div style="display: flex; justify-content: space-between; align-items: baseline;">
+            <div style="color: #fff; font-size: 11px; font-weight: 500;">Ops & Implementations Manager</div>
+            <div style="font-size: 8px; color: #444;">2024–2025</div>
+          </div>
+          <div style="font-size: 9px; color: #666; margin-top: 2px;">Vaas</div>
+        </div>
+        <div style="position: relative; padding-left: 20px; padding-bottom: 16px;">
+          <div style="position: absolute; left: -5px; top: 2px; width: 8px; height: 8px; border-radius: 50%; background: #555;"></div>
+          <div style="display: flex; justify-content: space-between; align-items: baseline;">
+            <div style="color: #fff; font-size: 11px; font-weight: 500;">Product (Treasury & AI Finance)</div>
+            <div style="font-size: 8px; color: #444;">2024</div>
+          </div>
+          <div style="font-size: 9px; color: #666; margin-top: 2px;">Concourse <span style="color: #444;">YC / a16z</span></div>
+        </div>
+        <div style="position: relative; padding-left: 20px; padding-bottom: 16px;">
+          <div style="position: absolute; left: -5px; top: 2px; width: 8px; height: 8px; border-radius: 50%; background: #333;"></div>
+          <div style="display: flex; justify-content: space-between; align-items: baseline;">
+            <div style="color: #ccc; font-size: 11px; font-weight: 500;">Global FP&A Treasury Manager</div>
+            <div style="font-size: 8px; color: #444;">2023–2024</div>
+          </div>
+          <div style="font-size: 9px; color: #666; margin-top: 2px;">Rappi</div>
+        </div>
+        <div style="position: relative; padding-left: 20px; padding-bottom: 0;">
+          <div style="position: absolute; left: -5px; top: 2px; width: 8px; height: 8px; border-radius: 50%; background: #222;"></div>
+          <div style="color: #888; font-size: 9px;">+ 5 earlier roles</div>
+        </div>
+      </div>
+      <!-- Bottom nav -->
+      <div style="border-top: 1px solid #1a1a1a; padding-top: 10px; margin-top: 16px; display: flex; gap: 20px; font-size: 10px; color: #555;">
+        <span>Projects</span>
+        <span>Blog</span>
+        <span style="color: #fff;">Experience</span>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A: Vertical Timeline</h3>
+      <p>Left-edge timeline with dots fading from white (current) to dark (older). Brief summary at top. Each entry: title, company, dates, one-liner. Expandable "earlier roles" at bottom. Classic, scannable.</p>
+    </div>
+  </div>
+
+  <!-- Option B: Company cards grid -->
+  <div class="card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="card-image" style="background: #0a0a0a; padding: 24px; min-height: 360px; font-family: 'SF Mono', 'Fira Code', monospace;">
+      <!-- Header -->
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <span style="color: #fff; font-size: 14px; letter-spacing: 2px;">EMMANUEL DIAZ</span>
+        <span style="font-size: 14px; color: #555;">&#9681;</span>
+      </div>
+      <div style="font-size: 11px; color: #555; letter-spacing: 3px; margin-bottom: 10px;">EXPERIENCE</div>
+      <div style="font-size: 9px; color: #666; line-height: 1.6; margin-bottom: 16px; max-width: 400px;">
+        7+ years building treasury and finance systems from scratch at high-growth startups across Latin America.
+      </div>
+      <!-- Stats row -->
+      <div style="display: flex; gap: 20px; margin-bottom: 16px; padding: 10px 0; border-top: 1px solid #1a1a1a; border-bottom: 1px solid #1a1a1a;">
+        <div>
+          <div style="color: #fff; font-size: 16px; font-weight: 600;">7+</div>
+          <div style="font-size: 7px; color: #555; letter-spacing: 1px;">YEARS</div>
+        </div>
+        <div>
+          <div style="color: #fff; font-size: 16px; font-weight: 600;">8+</div>
+          <div style="font-size: 7px; color: #555; letter-spacing: 1px;">COUNTRIES</div>
+        </div>
+        <div>
+          <div style="color: #fff; font-size: 16px; font-weight: 600;">9</div>
+          <div style="font-size: 7px; color: #555; letter-spacing: 1px;">COMPANIES</div>
+        </div>
+        <div>
+          <div style="color: #fff; font-size: 16px; font-weight: 600;">$105M</div>
+          <div style="font-size: 7px; color: #555; letter-spacing: 1px;">AUM MANAGED</div>
+        </div>
+      </div>
+      <!-- Company cards -->
+      <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;">
+        <div style="background: #111; border: 1px solid #1a1a1a; border-radius: 6px; padding: 12px;">
+          <div style="font-size: 8px; color: #444; margin-bottom: 4px;">2025–now</div>
+          <div style="color: #fff; font-size: 10px; font-weight: 500;">Cascade Debt</div>
+          <div style="font-size: 8px; color: #555; margin-top: 3px;">Capital Markets Ops</div>
+        </div>
+        <div style="background: #111; border: 1px solid #1a1a1a; border-radius: 6px; padding: 12px;">
+          <div style="font-size: 8px; color: #444; margin-bottom: 4px;">2024–2025</div>
+          <div style="color: #fff; font-size: 10px; font-weight: 500;">Vaas</div>
+          <div style="font-size: 8px; color: #555; margin-top: 3px;">Ops & Finance</div>
+        </div>
+        <div style="background: #111; border: 1px solid #1a1a1a; border-radius: 6px; padding: 12px;">
+          <div style="font-size: 8px; color: #444; margin-bottom: 4px;">2024</div>
+          <div style="color: #fff; font-size: 10px; font-weight: 500;">Concourse</div>
+          <div style="font-size: 8px; color: #555; margin-top: 3px;">Product · YC/a16z</div>
+        </div>
+        <div style="background: #111; border: 1px solid #1a1a1a; border-radius: 6px; padding: 12px;">
+          <div style="font-size: 8px; color: #444; margin-bottom: 4px;">2023–2024</div>
+          <div style="color: #fff; font-size: 10px; font-weight: 500;">Rappi</div>
+          <div style="font-size: 8px; color: #555; margin-top: 3px;">FP&A Treasury</div>
+        </div>
+        <div style="background: #111; border: 1px solid #1a1a1a; border-radius: 6px; padding: 12px;">
+          <div style="font-size: 8px; color: #444; margin-bottom: 4px;">2022–2023</div>
+          <div style="color: #fff; font-size: 10px; font-weight: 500;">Nowports</div>
+          <div style="font-size: 8px; color: #555; margin-top: 3px;">Treasury Leader</div>
+        </div>
+        <div style="background: #111; border: 1px solid #1a1a1a; border-radius: 6px; padding: 12px;">
+          <div style="font-size: 8px; color: #444; margin-bottom: 4px;">2020–2021</div>
+          <div style="color: #fff; font-size: 10px; font-weight: 500;">BlackRock</div>
+          <div style="font-size: 8px; color: #555; margin-top: 3px;">Treasury LatAm</div>
+        </div>
+      </div>
+      <div style="font-size: 8px; color: #444; margin-top: 8px; text-align: center;">+ Nubank · Mundi · Daimler · ED&F Man · Sensient</div>
+      <!-- Bottom nav -->
+      <div style="border-top: 1px solid #1a1a1a; padding-top: 10px; margin-top: 14px; display: flex; gap: 20px; font-size: 10px; color: #555;">
+        <span>Projects</span>
+        <span>Blog</span>
+        <span style="color: #fff;">Experience</span>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B: Stats Banner + Company Card Grid</h3>
+      <p>Key numbers (years, countries, companies, AUM) in a stats row at top. Companies as a 3-column card grid, same visual language as the Projects page. Consistent with the rest of the site. Compact, visual, data-driven.</p>
+    </div>
+  </div>
+
+  <!-- Option C: Two-column split -->
+  <div class="card" data-choice="c" onclick="toggleSelect(this)">
+    <div class="card-image" style="background: #0a0a0a; padding: 24px; min-height: 360px; font-family: 'SF Mono', 'Fira Code', monospace;">
+      <!-- Header -->
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <span style="color: #fff; font-size: 14px; letter-spacing: 2px;">EMMANUEL DIAZ</span>
+        <span style="font-size: 14px; color: #555;">&#9681;</span>
+      </div>
+      <div style="font-size: 11px; color: #555; letter-spacing: 3px; margin-bottom: 16px;">EXPERIENCE</div>
+      <!-- Two column -->
+      <div style="display: flex; gap: 24px;">
+        <!-- Left: Summary + skills -->
+        <div style="width: 45%; flex-shrink: 0;">
+          <div style="font-size: 9px; color: #666; line-height: 1.6; margin-bottom: 16px;">
+            Finance operations leader with 7+ years building treasury systems from scratch at high-growth startups across 8+ countries in LatAm.
+          </div>
+          <!-- Skills -->
+          <div style="font-size: 8px; color: #444; letter-spacing: 2px; margin-bottom: 8px;">TOOLS</div>
+          <div style="display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 14px;">
+            <span style="font-size: 7px; color: #555; background: #111; border: 1px solid #1a1a1a; padding: 2px 8px; border-radius: 8px;">Python</span>
+            <span style="font-size: 7px; color: #555; background: #111; border: 1px solid #1a1a1a; padding: 2px 8px; border-radius: 8px;">SQL</span>
+            <span style="font-size: 7px; color: #555; background: #111; border: 1px solid #1a1a1a; padding: 2px 8px; border-radius: 8px;">Excel</span>
+            <span style="font-size: 7px; color: #555; background: #111; border: 1px solid #1a1a1a; padding: 2px 8px; border-radius: 8px;">SWIFT</span>
+            <span style="font-size: 7px; color: #555; background: #111; border: 1px solid #1a1a1a; padding: 2px 8px; border-radius: 8px;">Google App Script</span>
+          </div>
+          <div style="font-size: 8px; color: #444; letter-spacing: 2px; margin-bottom: 8px;">LANGUAGES</div>
+          <div style="display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 14px;">
+            <span style="font-size: 7px; color: #555; background: #111; border: 1px solid #1a1a1a; padding: 2px 8px; border-radius: 8px;">Spanish (native)</span>
+            <span style="font-size: 7px; color: #555; background: #111; border: 1px solid #1a1a1a; padding: 2px 8px; border-radius: 8px;">English (fluent)</span>
+            <span style="font-size: 7px; color: #555; background: #111; border: 1px solid #1a1a1a; padding: 2px 8px; border-radius: 8px;">Portuguese</span>
+          </div>
+          <div style="font-size: 8px; color: #444; letter-spacing: 2px; margin-bottom: 8px;">EDUCATION</div>
+          <div style="font-size: 9px; color: #666;">Finance & Banking</div>
+          <div style="font-size: 8px; color: #444;">Escuela Bancaria y Comercial · 2013–2017</div>
+        </div>
+        <!-- Right: Timeline -->
+        <div style="flex: 1; border-left: 1px solid #1a1a1a; padding-left: 16px;">
+          <div style="font-size: 8px; color: #444; letter-spacing: 2px; margin-bottom: 10px;">TIMELINE</div>
+          <div style="display: flex; flex-direction: column; gap: 10px;">
+            <div>
+              <div style="display: flex; justify-content: space-between;">
+                <div style="color: #fff; font-size: 10px; font-weight: 500;">Cascade Debt</div>
+                <div style="font-size: 8px; color: #444;">2025–now</div>
+              </div>
+              <div style="font-size: 8px; color: #555;">Capital Markets Ops Manager</div>
+            </div>
+            <div>
+              <div style="display: flex; justify-content: space-between;">
+                <div style="color: #fff; font-size: 10px; font-weight: 500;">Vaas</div>
+                <div style="font-size: 8px; color: #444;">2024–2025</div>
+              </div>
+              <div style="font-size: 8px; color: #555;">Ops & Implementations Manager</div>
+            </div>
+            <div>
+              <div style="display: flex; justify-content: space-between;">
+                <div style="color: #fff; font-size: 10px; font-weight: 500;">Concourse</div>
+                <div style="font-size: 8px; color: #444;">2024</div>
+              </div>
+              <div style="font-size: 8px; color: #555;">Product · YC / a16z</div>
+            </div>
+            <div>
+              <div style="display: flex; justify-content: space-between;">
+                <div style="color: #ccc; font-size: 10px; font-weight: 500;">Rappi</div>
+                <div style="font-size: 8px; color: #444;">2023–2024</div>
+              </div>
+              <div style="font-size: 8px; color: #555;">Global FP&A Treasury</div>
+            </div>
+            <div>
+              <div style="display: flex; justify-content: space-between;">
+                <div style="color: #aaa; font-size: 10px; font-weight: 500;">Nowports</div>
+                <div style="font-size: 8px; color: #444;">2022–2023</div>
+              </div>
+              <div style="font-size: 8px; color: #555;">Treasury Leader · 8 countries</div>
+            </div>
+            <div style="font-size: 8px; color: #444; padding-top: 4px; border-top: 1px solid #111;">+ BlackRock · Nubank · Mundi · Daimler</div>
+          </div>
+        </div>
+      </div>
+      <!-- Bottom nav -->
+      <div style="border-top: 1px solid #1a1a1a; padding-top: 10px; margin-top: 14px; display: flex; gap: 20px; font-size: 10px; color: #555;">
+        <span>Projects</span>
+        <span>Blog</span>
+        <span style="color: #fff;">Experience</span>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>C: Two-Column — Profile + Timeline</h3>
+      <p>Left column: summary, tools/skills tags, languages, education. Right column: career timeline. Similar layout to the Blog's sidebar pattern. Gives the full CV picture at a glance.</p>
+    </div>
+  </div>
+
+</div>

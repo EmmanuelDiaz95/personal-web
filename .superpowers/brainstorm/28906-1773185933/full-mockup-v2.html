@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Emmanuel Diaz — Portfolio Mockup v2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --font-mono: 'IBM Plex Mono', 'SF Mono', 'Fira Code', monospace;
+    --font-sans: -apple-system, 'Segoe UI', system-ui, sans-serif;
+    --max-width: 1200px;
+    --transition: 0.3s ease;
+  }
+
+  /* DARK THEME */
+  [data-theme="dark"] {
+    --bg: #0a0a0a;
+    --surface: #111111;
+    --border: #1a1a1a;
+    --border-hover: #2a2a2a;
+    --text-primary: #ffffff;
+    --text-secondary: #888888;
+    --text-muted: #555555;
+    --text-faint: #333333;
+    --cta-border: #272727;
+    --badge-bg: #1a1a1a;
+    --toggle-icon: "☽";
+    --logo-filter: brightness(0) invert(1);
+    --nav-bg: rgba(10, 10, 10, 0.92);
+  }
+
+  /* LIGHT THEME */
+  [data-theme="light"] {
+    --bg: #f5f5f5;
+    --surface: #ebebeb;
+    --border: #d4d4d4;
+    --border-hover: #b0b0b0;
+    --text-primary: #0a0a0a;
+    --text-secondary: #555555;
+    --text-muted: #888888;
+    --text-faint: #bbbbbb;
+    --cta-border: #cccccc;
+    --badge-bg: #e0e0e0;
+    --toggle-icon: "☀";
+    --logo-filter: brightness(0);
+    --nav-bg: rgba(245, 245, 245, 0.92);
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    transition: background var(--transition), color var(--transition);
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  .page {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 32px 40px 100px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  @media (max-width: 768px) {
+    .page { padding: 20px 20px 100px; }
+  }
+
+  /* ==================== HEADER ==================== */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 40px;
+  }
+  .header-name {
+    font-family: var(--font-mono);
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 4px;
+    color: var(--text-primary);
+    transition: color var(--transition);
+  }
+  .theme-toggle {
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: 18px;
+    transition: all var(--transition);
+    background: transparent;
+    user-select: none;
+  }
+  .theme-toggle:hover {
+    border-color: var(--border-hover);
+    color: var(--text-primary);
+  }
+
+  /* ==================== PAGE TABS ==================== */
+  .page-tabs {
+    display: flex;
+    gap: 1px;
+    margin-bottom: 40px;
+    background: var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+  .page-tab {
+    flex: 1;
+    padding: 14px;
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: var(--text-muted);
+    background: var(--surface);
+    cursor: pointer;
+    transition: all var(--transition);
+    border: none;
+  }
+  .page-tab.active {
+    color: var(--text-primary);
+    background: var(--bg);
+  }
+  .page-tab:hover { color: var(--text-primary); }
+
+  /* ==================== SHARED ==================== */
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+  }
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 3px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    transition: color var(--transition);
+  }
+  .search-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--text-muted);
+    width: 240px;
+    outline: none;
+    transition: all var(--transition);
+  }
+  .search-box:focus { border-color: var(--border-hover); }
+
+  .page-section { display: none; }
+  .page-section.active { display: block; }
+
+  /* ==================== CARDS ==================== */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 24px;
+    transition: all var(--transition);
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+  }
+  .card:hover { border-color: var(--border-hover); }
+
+  .card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 14px;
+  }
+  .card-number {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-faint);
+    transition: color var(--transition);
+  }
+
+  .status-badge {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    padding: 3px 12px;
+    border-radius: 14px;
+    background: var(--badge-bg);
+    transition: all var(--transition);
+  }
+  .status-shipped { color: var(--text-secondary); }
+  .status-progress { color: var(--text-muted); }
+  .status-archived { color: var(--text-faint); }
+
+  .card-title {
+    font-size: 17px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    line-height: 1.3;
+    transition: color var(--transition);
+  }
+  .card-desc {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 14px;
+    transition: color var(--transition);
+  }
+  .card-tags {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .tag {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-muted);
+    background: var(--bg);
+    padding: 4px 10px;
+    border-radius: 12px;
+    transition: all var(--transition);
+  }
+
+  /* ==================== CTA CARD ==================== */
+  .cta-card {
+    background: transparent;
+    border: 1px dashed var(--cta-border);
+    border-radius: 8px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    cursor: pointer;
+    transition: all var(--transition);
+  }
+  .cta-card:hover { border-color: var(--text-muted); }
+  .cta-plus {
+    font-size: 32px;
+    color: var(--text-faint);
+    margin-bottom: 10px;
+    font-weight: 300;
+    transition: color var(--transition);
+  }
+  .cta-text {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+    transition: color var(--transition);
+  }
+  .cta-link {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--text-primary);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: color var(--transition);
+  }
+
+  /* ==================== PROJECTS GRID ==================== */
+  .project-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 40px;
+  }
+  @media (max-width: 640px) {
+    .project-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ==================== BLOG ==================== */
+  .blog-layout {
+    display: flex;
+    gap: 32px;
+    margin-bottom: 40px;
+  }
+  @media (max-width: 768px) {
+    .blog-layout { flex-direction: column; }
+    .blog-sidebar { width: 100% !important; }
+  }
+  .blog-sidebar {
+    width: 220px;
+    flex-shrink: 0;
+  }
+  .sidebar-section { margin-bottom: 24px; }
+  .sidebar-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    transition: color var(--transition);
+  }
+  .sidebar-item {
+    font-size: 14px;
+    color: var(--text-secondary);
+    padding: 6px 0;
+    cursor: pointer;
+    transition: color 0.15s;
+  }
+  .sidebar-item:hover { color: var(--text-primary); }
+  .sidebar-item.active { color: var(--text-primary); }
+  .sidebar-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+
+  .newsletter {
+    border: 1px dashed var(--cta-border);
+    border-radius: 8px;
+    padding: 20px;
+    transition: border-color var(--transition);
+  }
+  .newsletter-title {
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+  .newsletter-desc {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+    transition: color var(--transition);
+  }
+  .newsletter-input {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 12px;
+    color: var(--text-muted);
+    width: 100%;
+    margin-bottom: 10px;
+    outline: none;
+    font-family: var(--font-mono);
+    transition: all var(--transition);
+  }
+  .newsletter-btn {
+    background: var(--text-primary);
+    color: var(--bg);
+    border: none;
+    border-radius: 6px;
+    padding: 8px 16px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+    font-family: var(--font-sans);
+    transition: all var(--transition);
+  }
+
+  .blog-articles {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .article-meta {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+    transition: color var(--transition);
+  }
+  .article-title {
+    font-size: 17px;
+    font-weight: 500;
+    margin-bottom: 6px;
+    line-height: 1.3;
+  }
+  .article-excerpt {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    transition: color var(--transition);
+  }
+
+  /* ==================== EXPERIENCE ==================== */
+  .exp-summary {
+    font-size: 16px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: 28px;
+    max-width: 680px;
+    transition: color var(--transition);
+  }
+
+  .stats-bar {
+    display: flex;
+    gap: 48px;
+    padding: 20px 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 28px;
+    transition: border-color var(--transition);
+    flex-wrap: wrap;
+  }
+  .stat-value {
+    font-family: var(--font-mono);
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--text-primary);
+    transition: color var(--transition);
+  }
+  .stat-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--text-muted);
+    margin-top: 4px;
+    transition: color var(--transition);
+  }
+
+  .company-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 16px;
+  }
+  @media (max-width: 768px) {
+    .company-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 480px) {
+    .company-grid { grid-template-columns: 1fr; }
+  }
+
+  .company-logo-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+  .company-logo {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    flex-shrink: 0;
+    transition: all var(--transition);
+  }
+  .company-logo img {
+    width: 22px;
+    height: 22px;
+    object-fit: contain;
+    filter: var(--logo-filter);
+    transition: filter var(--transition);
+  }
+  .company-logo-fallback {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-muted);
+  }
+
+  .company-date {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-muted);
+    transition: color var(--transition);
+  }
+  .company-name {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 4px;
+    transition: color var(--transition);
+  }
+  .company-role {
+    font-size: 13px;
+    color: var(--text-secondary);
+    transition: color var(--transition);
+  }
+  .company-extra {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-muted);
+    text-align: center;
+    margin-top: 8px;
+    transition: color var(--transition);
+  }
+
+  /* ==================== BOTTOM NAV ==================== */
+  .bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--nav-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-top: 1px solid var(--border);
+    padding: 14px 40px;
+    z-index: 100;
+    transition: all var(--transition);
+  }
+  .bottom-nav-inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    display: flex;
+    gap: 32px;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: 13px;
+  }
+  .nav-link {
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.15s;
+    cursor: pointer;
+  }
+  .nav-link:hover { color: var(--text-primary); }
+  .nav-link.active { color: var(--text-primary); }
+  .nav-email {
+    margin-left: auto;
+    font-size: 12px;
+    color: var(--text-muted);
+    transition: color var(--transition);
+  }
+
+  .mockup-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text-faint);
+    text-align: center;
+    margin-bottom: 24px;
+    letter-spacing: 2px;
+    transition: color var(--transition);
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-name">EMMANUEL DIAZ</div>
+    <div class="theme-toggle" onclick="toggleTheme()" id="themeBtn">☽</div>
+  </div>
+
+  <div class="mockup-label">INTERACTIVE MOCKUP — CLICK TABS TO SWITCH PAGES · CLICK ☽ TO TOGGLE THEME</div>
+
+  <!-- Page tabs — reordered: Experience, Projects, Blog -->
+  <div class="page-tabs">
+    <div class="page-tab active" onclick="showPage('experience')">EXPERIENCE</div>
+    <div class="page-tab" onclick="showPage('projects')">PROJECTS</div>
+    <div class="page-tab" onclick="showPage('blog')">BLOG</div>
+  </div>
+
+  <!-- ==================== EXPERIENCE PAGE (LANDING) ==================== -->
+  <div class="page-section active" id="experience">
+    <div class="section-header">
+      <div class="section-label">Experience</div>
+    </div>
+
+    <div class="exp-summary">
+      Finance operations leader with 7+ years building treasury and finance systems from scratch at high-growth startups across Latin America. Comfortable owning the full finance ops stack in fast-moving environments where structure doesn't exist yet.
+    </div>
+
+    <div class="stats-bar">
+      <div class="stat-block">
+        <div class="stat-value">7+</div>
+        <div class="stat-label">YEARS</div>
+      </div>
+      <div class="stat-block">
+        <div class="stat-value">8+</div>
+        <div class="stat-label">COUNTRIES</div>
+      </div>
+      <div class="stat-block">
+        <div class="stat-value">9</div>
+        <div class="stat-label">COMPANIES</div>
+      </div>
+      <div class="stat-block">
+        <div class="stat-value">$105M</div>
+        <div class="stat-label">AUM MANAGED</div>
+      </div>
+    </div>
+
+    <div class="company-grid">
+      <!-- Cascade Debt -->
+      <div class="card">
+        <div class="company-logo-row">
+          <div class="company-logo">
+            <span class="company-logo-fallback">CD</span>
+          </div>
+          <div class="company-date">2025 – Present</div>
+        </div>
+        <div class="company-name">Cascade Debt</div>
+        <div class="company-role">Capital Markets Ops Manager</div>
+      </div>
+
+      <!-- Vaas -->
+      <div class="card">
+        <div class="company-logo-row">
+          <div class="company-logo">
+            <span class="company-logo-fallback">V</span>
+          </div>
+          <div class="company-date">2024 – 2025</div>
+        </div>
+        <div class="company-name">Vaas</div>
+        <div class="company-role">Ops & Implementations Manager</div>
+      </div>
+
+      <!-- Concourse -->
+      <div class="card">
+        <div class="company-logo-row">
+          <div class="company-logo">
+            <img src="https://logo.clearbit.com/concourse.co" alt="Concourse" onerror="this.parentElement.innerHTML='<span class=company-logo-fallback>C</span>'">
+          </div>
+          <div class="company-date">2024</div>
+        </div>
+        <div class="company-name">Concourse</div>
+        <div class="company-role">Product · YC / a16z</div>
+      </div>
+
+      <!-- Rappi -->
+      <div class="card">
+        <div class="company-logo-row">
+          <div class="company-logo">
+            <img src="https://logo.clearbit.com/rappi.com" alt="Rappi" onerror="this.parentElement.innerHTML='<span class=company-logo-fallback>R</span>'">
+          </div>
+          <div class="company-date">2023 – 2024</div>
+        </div>
+        <div class="company-name">Rappi</div>
+        <div class="company-role">Global FP&A Treasury Manager</div>
+      </div>
+
+      <!-- Nowports -->
+      <div class="card">
+        <div class="company-logo-row">
+          <div class="company-logo">
+            <img src="https://logo.clearbit.com/nowports.com" alt="Nowports" onerror="this.parentElement.innerHTML='<span class=company-logo-fallback>N</span>'">
+          </div>
+          <div class="company-date">2022 – 2023</div>
+        </div>
+        <div class="company-name">Nowports</div>
+        <div class="company-role">Treasury Leader · 8 countries</div>
+      </div>
+
+      <!-- Mundi -->
+      <div class="card">
+        <div class="company-logo-row">
+          <div class="company-logo">
+            <img src="https://logo.clearbit.com/mundi.io" alt="Mundi" onerror="this.parentElement.innerHTML='<span class=company-logo-fallback>M</span>'">
+          </div>
+          <div class="company-date">2022</div>
+        </div>
+        <div class="company-name">Mundi</div>
+        <div class="company-role">Treasury Leader</div>
+      </div>
+
+      <!-- Nubank -->
+      <div class="card">
+        <div class="company-logo-row">
+          <div class="company-logo">
+            <img src="https://logo.clearbit.com/nubank.com.br" alt="Nubank" onerror="this.parentElement.innerHTML='<span class=company-logo-fallback>Nu</span>'">
+          </div>
+          <div class="company-date">2021 – 2022</div>
+        </div>
+        <div class="company-name">Nubank</div>
+        <div class="company-role">Finance Ops & Treasury Specialist</div>
+      </div>
+
+      <!-- BlackRock -->
+      <div class="card">
+        <div class="company-logo-row">
+          <div class="company-logo">
+            <img src="https://logo.clearbit.com/blackrock.com" alt="BlackRock" onerror="this.parentElement.innerHTML='<span class=company-logo-fallback>BR</span>'">
+          </div>
+          <div class="company-date">2020 – 2021</div>
+        </div>
+        <div class="company-name">BlackRock</div>
+        <div class="company-role">Corporate Treasury LatAm</div>
+      </div>
+
+      <!-- Daimler -->
+      <div class="card">
+        <div class="company-logo-row">
+          <div class="company-logo">
+            <img src="https://logo.clearbit.com/daimler.com" alt="Daimler" onerror="this.parentElement.innerHTML='<span class=company-logo-fallback>D</span>'">
+          </div>
+          <div class="company-date">2018 – 2020</div>
+        </div>
+        <div class="company-name">Daimler AG</div>
+        <div class="company-role">Cash Management, NAFTA</div>
+      </div>
+    </div>
+
+    <div class="company-extra">+ ED&F Man · Sensient Technologies</div>
+  </div>
+
+  <!-- ==================== PROJECTS PAGE ==================== -->
+  <div class="page-section" id="projects">
+    <div class="section-header">
+      <div class="section-label">Selected Work</div>
+      <input type="text" class="search-box" placeholder="Search projects..." readonly>
+    </div>
+
+    <div class="project-grid">
+      <div class="card">
+        <div class="card-top">
+          <div class="card-number">01</div>
+          <div class="status-badge status-shipped">shipped</div>
+        </div>
+        <div class="card-title">Choice Empowers</div>
+        <div class="card-desc">Home building platform making affordable housing accessible through intuitive UX design.</div>
+        <div class="card-tags">
+          <span class="tag">UX Design</span>
+          <span class="tag">Research</span>
+          <span class="tag">Prototyping</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-top">
+          <div class="card-number">02</div>
+          <div class="status-badge status-shipped">shipped</div>
+        </div>
+        <div class="card-title">Proyectos Productivos</div>
+        <div class="card-desc">Digital government application process for Monterrey, Mexico. 60% faster processing.</div>
+        <div class="card-tags">
+          <span class="tag">Gov Tech</span>
+          <span class="tag">UX</span>
+          <span class="tag">Process Design</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-top">
+          <div class="card-number">03</div>
+          <div class="status-badge status-progress">in progress</div>
+        </div>
+        <div class="card-title">Tarahumara Ultra Tracker</div>
+        <div class="card-desc">Training plan manager with Garmin Connect integration for a 59km ultramarathon.</div>
+        <div class="card-tags">
+          <span class="tag">Python</span>
+          <span class="tag">Health</span>
+          <span class="tag">CLI</span>
+        </div>
+      </div>
+
+      <div class="cta-card">
+        <div class="cta-plus">+</div>
+        <div class="cta-text">Want to collaborate?</div>
+        <div class="cta-link">Let's talk &rarr;</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== BLOG PAGE ==================== -->
+  <div class="page-section" id="blog">
+    <div class="section-header">
+      <div class="section-label">Blog</div>
+    </div>
+
+    <div class="blog-layout">
+      <div class="blog-sidebar">
+        <div class="sidebar-section">
+          <input type="text" class="search-box" style="width: 100%; margin-bottom: 20px;" placeholder="Search articles..." readonly>
+        </div>
+
+        <div class="sidebar-section">
+          <div class="sidebar-label">Categories</div>
+          <div class="sidebar-item active">All</div>
+          <div class="sidebar-item">Urban Design</div>
+          <div class="sidebar-item">Design Methods</div>
+          <div class="sidebar-item">Technology</div>
+          <div class="sidebar-item">Finance</div>
+        </div>
+
+        <div class="sidebar-section">
+          <div class="sidebar-label">Tags</div>
+          <div class="sidebar-tags">
+            <span class="tag">UX</span>
+            <span class="tag">AI</span>
+            <span class="tag">fintech</span>
+            <span class="tag">python</span>
+            <span class="tag">treasury</span>
+            <span class="tag">LatAm</span>
+          </div>
+        </div>
+
+        <div class="newsletter">
+          <div class="newsletter-title">Stay updated</div>
+          <div class="newsletter-desc">New articles, monthly.</div>
+          <input type="text" class="newsletter-input" placeholder="your@email.com" readonly>
+          <button class="newsletter-btn">Subscribe</button>
+        </div>
+      </div>
+
+      <div class="blog-articles">
+        <div class="card">
+          <div class="article-meta">
+            <span>Mar 15, 2023</span>
+            <span>5 min read</span>
+          </div>
+          <div class="article-title">The Intersection of Urban Design and Technology</div>
+          <div class="article-excerpt">How technology is reshaping urban environments and the role of human-centered design in creating equitable cities.</div>
+          <div class="card-tags" style="margin-top: 12px;">
+            <span class="tag">Urban Design</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="article-meta">
+            <span>Feb 28, 2023</span>
+            <span>7 min read</span>
+          </div>
+          <div class="article-title">Participatory Design in Practice</div>
+          <div class="article-excerpt">Real-world applications of collaborative design methodologies and their impact on community engagement.</div>
+          <div class="card-tags" style="margin-top: 12px;">
+            <span class="tag">Design Methods</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="article-meta">
+            <span>Feb 10, 2023</span>
+            <span>6 min read</span>
+          </div>
+          <div class="article-title">Spatial Justice in the Digital Age</div>
+          <div class="article-excerpt">Examining how digital tools can promote or hinder spatial equity in urban development.</div>
+          <div class="card-tags" style="margin-top: 12px;">
+            <span class="tag">Technology</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Bottom Nav -->
+<div class="bottom-nav">
+  <div class="bottom-nav-inner">
+    <span class="nav-link active" onclick="showPage('experience')">Experience</span>
+    <span class="nav-link" onclick="showPage('projects')">Projects</span>
+    <span class="nav-link" onclick="showPage('blog')">Blog</span>
+    <span class="nav-email">emmanueldc95@hotmail.com</span>
+  </div>
+</div>
+
+<script>
+const pages = ['experience', 'projects', 'blog'];
+
+function showPage(page) {
+  document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.page-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+
+  document.getElementById(page).classList.add('active');
+  document.querySelectorAll('.page-tab')[pages.indexOf(page)].classList.add('active');
+  document.querySelectorAll('.nav-link')[pages.indexOf(page)].classList.add('active');
+}
+
+function toggleTheme() {
+  const html = document.documentElement;
+  const btn = document.getElementById('themeBtn');
+  if (html.getAttribute('data-theme') === 'dark') {
+    html.setAttribute('data-theme', 'light');
+    btn.textContent = '☀';
+  } else {
+    html.setAttribute('data-theme', 'dark');
+    btn.textContent = '☽';
+  }
+}
+</script>
+</body>
+</html>
