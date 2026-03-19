@@ -7,6 +7,7 @@ export const CONTACT = {
 export const SOCIAL = {
   linkedin: 'https://www.linkedin.com/in/emmanuel-diaz-50643093/',
   github: 'https://github.com/EmmanuelDiaz95',
+  strava: 'https://www.strava.com/athletes/emmanueldiaz',
 };
 
 export const SITE = {

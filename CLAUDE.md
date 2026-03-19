@@ -29,7 +29,7 @@ Static export (`output: 'export'` in `next.config.js`), deployable anywhere.
 
 ### Component Organization
 
-- `src/components/layout/` — Header (name masthead + theme toggle), BottomNav (fixed bottom nav)
+- `src/components/layout/` — Header (name masthead + social icons + theme toggle), PageTabs (sticky top navigation)
 - `src/components/ui/` — Reusable: CompanyCard, ProjectCard, BlogPostCard, StatusBadge, TagPill, StatBlock, SearchBar, CTACard, NewsletterForm
 - `src/components/ThemeToggle.tsx` — Dark/light mode toggle using next-themes
 
@@ -54,7 +54,8 @@ No backend. Static TypeScript files under `src/data/`:
 - Monochromatic palette: no accent color, hierarchy from value contrast only
 - Card system: `--surface` background, `--border` border, hover transitions, 10px radius
 - Max-width: 1440px, responsive padding (64px → 40px → 20px)
-- Bottom nav: fixed, backdrop blur, semi-transparent background
+- PageTabs: sticky segmented control (Experience/Projects/Blog) below header
+- Social icons in header: LinkedIn, GitHub, Strava (lucide-react + custom SVG)
 
 ### Utilities
 

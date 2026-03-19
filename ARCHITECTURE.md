@@ -1,281 +1,242 @@
 # Architecture Overview
 
-This document serves as a critical, living template designed to equip agents with a rapid and comprehensive understanding of the codebase's architecture, enabling efficient navigation and effective contribution from day one. Update this document as the codebase evolves.
+This document provides a comprehensive overview of the portfolio website's architecture. Update as the codebase evolves.
 
 ## 1. Project Structure
 
-This section provides a high-level overview of the project's directory and file structure, categorised by architectural layer or major functional area. It is essential for quickly navigating the codebase, locating relevant files, and understanding the overall organization and separation of concerns.
-
 ```
 personal-web/
-├── public/                          # Publicly accessible static assets
-│   ├── index.html                   # HTML template with SEO & Open Graph meta tags
-│   ├── manifest.json                # PWA manifest (standalone display, blue theme)
-│   ├── favicon.ico                  # Site favicon
-│   ├── logo192.png                  # PWA icon (192x192)
-│   ├── logo512.png                  # PWA icon (512x512)
-│   ├── robots.txt                   # Search engine crawling rules
-│   └── images/
-│       └── main_page.jpeg           # Profile photo for HomePage
-├── src/                             # Main application source code
+├── public/                              # Static assets served as-is
+│   ├── images/
+│   │   └── logos/                       # Company logo files (42x42px, square)
+│   ├── favicon.ico
+│   ├── next.svg
+│   └── vercel.svg
+├── src/
+│   ├── app/                             # Next.js App Router (file-based routing)
+│   │   ├── layout.tsx                   # Root layout: HTML shell, fonts, ThemeProvider, Header, PageTabs
+│   │   ├── globals.css                  # Tailwind directives + CSS custom properties (dark/light)
+│   │   ├── page.tsx                     # Experience page (landing — `/`)
+│   │   ├── not-found.tsx                # 404 page
+│   │   ├── projects/
+│   │   │   ├── page.tsx                 # Projects grid with search (`/projects`)
+│   │   │   └── [slug]/
+│   │   │       └── page.tsx             # Project detail (`/projects/:slug`)
+│   │   └── blog/
+│   │       ├── page.tsx                 # Blog with sidebar filters (`/blog`)
+│   │       └── [slug]/
+│   │           └── page.tsx             # Blog post detail (`/blog/:slug`)
 │   ├── components/
-│   │   ├── layout/                  # Persistent shell (always rendered)
-│   │   │   ├── Header.js            # Sticky top bar: nav, search toggle, theme toggle
-│   │   │   ├── Navigation.js        # NavLink buttons: About, Projects, Blog, Contact
-│   │   │   └── Footer.js            # Fixed bottom bar: copyright, social links
-│   │   ├── pages/                   # Route-level components (all lazy-loaded)
-│   │   │   ├── HomePage.js          # Landing / About section with profile photo & bio
-│   │   │   ├── ProjectsPage.js      # Projects listing grid
-│   │   │   ├── ProjectDetailPage.js # Individual project view (slug-based lookup)
-│   │   │   ├── BlogPage.js          # Blog posts listing
-│   │   │   ├── BlogDetailPage.js    # Individual blog post view (slug-based lookup)
-│   │   │   ├── ContactPage.js       # Contact info + form (two-column layout)
-│   │   │   └── NotFoundPage.js      # 404 error page with "Go Home" link
-│   │   └── ui/                      # Reusable presentational components
-│   │       ├── ProjectCard.js       # Project preview card (image, title, methods, link)
-│   │       ├── BlogPostCard.js      # Blog post preview card (date, excerpt, category)
-│   │       ├── SearchBar.js         # Conditional search input overlay
-│   │       └── ContactForm.js       # Validated contact form (simulated submission)
-│   ├── contexts/                    # React Context providers (global state)
-│   │   └── ThemeContext.js          # ThemeProvider + useTheme() hook for dark mode
-│   ├── hooks/                       # Custom React hooks
-│   │   ├── useDarkMode.js           # Dark/light mode toggle + DOM class management
-│   │   └── useSearch.js             # Global search across projects and blog posts
-│   ├── data/                        # Static data layer (no backend)
-│   │   ├── projects.js              # Project objects array + getProjectBySlug()
-│   │   ├── blogPosts.js             # Blog post objects array + getBlogPostBySlug()
-│   │   └── constants.js             # CONTACT_INFO, SOCIAL_LINKS, CURRENT_YEAR
-│   ├── App.js                       # Root component: ThemeProvider > Router > AppContent
-│   ├── App.test.js                  # Smoke tests (navigation rendering, heading check)
-│   ├── index.js                     # React entry point (renders App into #root)
-│   ├── index.css                    # Tailwind CSS directives (@tailwind base/components/utilities)
-│   ├── reportWebVitals.js           # Web Vitals performance monitoring (CLS, FID, FCP, LCP, TTFB)
-│   └── setupTests.js               # Jest setup (@testing-library/jest-dom)
-├── learning/                        # Learning materials (not part of the app)
-│   ├── README.md
-│   ├── LEARNING_PLAN.md
-│   └── exercises/
-├── tailwind.config.js               # Tailwind: darkMode 'class', no custom theme extensions
-├── postcss.config.js                # PostCSS: tailwindcss + autoprefixer
-├── .eslintrc.json                   # ESLint: react-app + jsx-a11y accessibility rules
-├── .prettierrc                      # Prettier: single quotes, 100-char width, trailing commas
-├── .eslintignore                    # ESLint ignore patterns
-├── .prettierignore                  # Prettier ignore patterns
-├── .nvmrc                           # Node version: v14.17.0
-├── .gitignore                       # Git ignore rules
-├── package.json                     # Dependencies and scripts
-├── CONTRIBUTING.md                  # Setup and contribution guide
-├── CLAUDE.md                        # Agent-oriented project documentation
-└── ARCHITECTURE.md                  # This document
+│   │   ├── layout/
+│   │   │   ├── Header.tsx               # Name masthead + social icons + theme toggle
+│   │   │   └── PageTabs.tsx             # Sticky top navigation tabs (Experience/Projects/Blog)
+│   │   ├── ui/
+│   │   │   ├── CompanyCard.tsx          # Company card with logo/monogram, period, role
+│   │   │   ├── ProjectCard.tsx          # Project card with number, status badge, tags
+│   │   │   ├── BlogPostCard.tsx         # Blog article card with date, read time, excerpt
+│   │   │   ├── StatusBadge.tsx          # Pill badge (shipped / in progress / archived)
+│   │   │   ├── TagPill.tsx              # Small rounded tag pill
+│   │   │   ├── StatBlock.tsx            # Large number + label (e.g., "7+" / "YEARS")
+│   │   │   ├── SearchBar.tsx            # Controlled search input
+│   │   │   ├── CTACard.tsx              # Dashed-border "Want to collaborate?" tile
+│   │   │   └── NewsletterForm.tsx       # Email subscription form
+│   │   └── ThemeToggle.tsx              # Moon/Sun icon toggle (next-themes)
+│   ├── data/                            # Static TypeScript data layer (no backend)
+│   │   ├── projects.ts                  # Project array + getProjectBySlug()
+│   │   ├── blogPosts.ts                 # Blog post array + getBlogPostBySlug(), getCategories(), getAllTags()
+│   │   ├── experience.ts               # Companies, stats, profile summary, earlier roles
+│   │   └── constants.ts                 # Contact info, social links (LinkedIn, GitHub, Strava), site metadata
+│   └── lib/
+│       └── utils.ts                     # cn() classname helper
+├── docs/
+│   └── superpowers/
+│       ├── specs/                       # Design specifications
+│       └── plans/                       # Implementation plans
+├── tailwind.config.ts                   # Tailwind: darkMode 'class', custom colors, fonts, max-width
+├── next.config.js                       # Next.js: static export, unoptimized images
+├── tsconfig.json                        # TypeScript configuration
+├── postcss.config.js                    # PostCSS for Tailwind
+├── .nvmrc                               # Node version: 22
+├── package.json                         # Dependencies and scripts
+├── CLAUDE.md                            # Agent-oriented project documentation
+└── ARCHITECTURE.md                      # This document
 ```
 
 ## 2. High-Level System Diagram
 
-This is a **static, frontend-only single-page application** with no backend services. All content is embedded in JavaScript data files and served client-side.
+This is a **statically exported Next.js application** with no backend. All content lives in TypeScript data files. Pages are pre-rendered at build time.
 
 ```
-                          ┌──────────────────────────────────────────────┐
-                          │              Browser (Client)                │
-                          │                                              │
-[User] <──────────────>   │  ┌──────────────────────────────────────┐    │
-                          │  │           React Application           │    │
-                          │  │                                        │    │
-                          │  │  ThemeProvider (dark/light mode)       │    │
-                          │  │    └── BrowserRouter                   │    │
-                          │  │          └── AppContent                │    │
-                          │  │               ├── Header + SearchBar   │    │
-                          │  │               ├── Routes (lazy-loaded) │    │
-                          │  │               │    ├── HomePage         │    │
-                          │  │               │    ├── ProjectsPage     │    │
-                          │  │               │    ├── ProjectDetailPage│    │
-                          │  │               │    ├── BlogPage         │    │
-                          │  │               │    ├── BlogDetailPage   │    │
-                          │  │               │    ├── ContactPage      │    │
-                          │  │               │    └── NotFoundPage     │    │
-                          │  │               └── Footer               │    │
-                          │  │                                        │    │
-                          │  │  ┌─────────────────────────────┐       │    │
-                          │  │  │  Static Data Layer (src/data)│       │    │
-                          │  │  │  projects.js | blogPosts.js  │       │    │
-                          │  │  │  constants.js                │       │    │
-                          │  │  └─────────────────────────────┘       │    │
-                          │  └──────────────────────────────────────┘    │
-                          └──────────────────────────────────────────────┘
+                      ┌──────────────────────────────────────────────────┐
+                      │               Browser (Client)                   │
+                      │                                                  │
+[User] <──────────>   │  ┌──────────────────────────────────────────┐    │
+                      │  │          Next.js Application              │    │
+                      │  │                                            │    │
+                      │  │  ThemeProvider (next-themes, class strategy)│    │
+                      │  │    └── Page Container (max-w-1440px)       │    │
+                      │  │          ├── Header                        │    │
+                      │  │          │    ├── "EMMANUEL DIAZ" masthead  │    │
+                      │  │          │    ├── Social icons (LI/GH/S)   │    │
+                      │  │          │    └── ThemeToggle (Moon/Sun)    │    │
+                      │  │          ├── PageTabs (sticky top nav)     │    │
+                      │  │          │    ├── Experience                │    │
+                      │  │          │    ├── Projects                  │    │
+                      │  │          │    └── Blog                     │    │
+                      │  │          └── <main> (page content)         │    │
+                      │  │               ├── / (Experience)           │    │
+                      │  │               ├── /projects                │    │
+                      │  │               ├── /projects/[slug]         │    │
+                      │  │               ├── /blog                    │    │
+                      │  │               ├── /blog/[slug]             │    │
+                      │  │               └── 404                      │    │
+                      │  │                                            │    │
+                      │  │  ┌──────────────────────────────────┐      │    │
+                      │  │  │  Static Data Layer (src/data/)    │      │    │
+                      │  │  │  projects.ts | blogPosts.ts       │      │    │
+                      │  │  │  experience.ts | constants.ts     │      │    │
+                      │  │  └──────────────────────────────────┘      │    │
+                      │  └──────────────────────────────────────────┘    │
+                      └──────────────────────────────────────────────────┘
 
 Data Flow:
-  Static Data (data/*.js) ──> Custom Hooks (useSearch) ──> App Component
-                                                              │
-  ThemeContext (useDarkMode) ───────────────────────────────>  │
-                                                              ▼
-                                                    Layout Components
-                                                    (Header, Footer)
-                                                              │
-                                                              ▼
-                                                    Page Components
-                                                    (via React Router)
-                                                              │
-                                                              ▼
-                                                    UI Components
-                                                    (Cards, Forms, SearchBar)
+  Static Data (data/*.ts) ──> Page Components (server-rendered at build)
+                                     │
+  ThemeProvider (next-themes) ──> Client Components (ThemeToggle, PageTabs,
+                                  SearchBar, NewsletterForm, blog/projects pages)
+                                     │
+                                     ▼
+                               UI Components (Cards, Badges, Tags)
 ```
 
 ## 3. Key Components
 
-### 3.1. Frontend
+### 3.1. Application
 
-**Name:** Personal Portfolio Web App
+**Name:** Emmanuel Diaz — Personal Portfolio
 
-**Description:** A single-page application serving as a professional portfolio for a Tech-Finance Professional based in Monterrey, Mexico. Users can browse project case studies, read blog posts about urban design and technology, and submit a contact form. Features include dark/light mode toggle, global search across all content, and SEO-optimized markup.
+**Description:** A portfolio website for a Finance Operations leader. Three main pages — Experience (landing with career stats and company history), Projects (case studies and side projects), and Blog (articles with category/tag filtering). Monochromatic design system with dark/light mode toggle.
 
-**Technologies:** React 18.3.1, React Router DOM 6.30.2, Tailwind CSS 3.4.13, Lucide React (icons), Create React App 5.0.1, PostCSS, Autoprefixer
+**Technologies:** Next.js 14 (App Router), TypeScript, Tailwind CSS, next-themes, lucide-react, IBM Plex Mono (Google Fonts)
 
-**Deployment:** Static build (`npm run build` produces `build/` directory). Suitable for any static hosting (Vercel, Netlify, GitHub Pages, S3/CloudFront). No server-side rendering.
+**Deployment:** Static export (`output: 'export'`). `npm run build` produces an `out/` directory. Deployable to Vercel, Netlify, GitHub Pages, S3/CloudFront, or any static host.
 
 ### 3.2. Backend Services
 
-**Not applicable.** This is a fully static frontend application with no backend. The contact form currently simulates submission via `console.log` and `setTimeout` (see `ContactForm.js`). A backend or third-party form service would need to be integrated for real form handling.
+**Not applicable.** Fully static frontend. The newsletter form logs to console (needs integration with a real service). The CTA card opens a mailto link.
 
 ## 4. Data Stores
 
-### 4.1. Static JavaScript Data Files
+### 4.1. Static TypeScript Data Files
 
-**Name:** Embedded Content Store
+**Type:** In-memory TypeScript modules (`src/data/*.ts`)
 
-**Type:** In-memory JavaScript modules (`src/data/*.js`)
+**Purpose:** All portfolio content — projects, blog posts, experience history, and site constants. No database or CMS needed at current scale.
 
-**Purpose:** Stores all portfolio content — project case studies, blog posts, and site-wide constants. Eliminates the need for a database or CMS at the current scale.
+| File | Description | Key fields |
+|------|-------------|------------|
+| `projects.ts` | 3 projects | `slug`, `title`, `description`, `fullDescription`, `role`, `status` (shipped/in progress/archived), `tags[]`, `methods`, `timeline`, `team`, `outcomes[]` |
+| `blogPosts.ts` | 4 blog posts | `slug`, `title`, `date`, `excerpt`, `content`, `readTime`, `category`, `tags[]` |
+| `experience.ts` | 9 companies + stats | `name`, `role`, `period`, `logo?`, `monogram`; stats: years/countries/companies/AUM |
+| `constants.ts` | Site metadata | `CONTACT` (email, phone, location), `SOCIAL` (linkedin, github, strava), `SITE` (name, title) |
 
-**Key files:**
+**Lookup pattern:** `getProjectBySlug()` and `getBlogPostBySlug()` helpers find items by slug. `getCategories()` and `getAllTags()` derive filter options from blog data.
 
-| File | Description | Schema highlights |
-|------|-------------|-------------------|
-| `projects.js` | Array of 2 project objects | `slug`, `title`, `image`, `description`, `fullDescription`, `role`, `methods`, `timeline`, `team`, `outcomes[]` |
-| `blogPosts.js` | Array of 3 blog post objects | `id`, `slug`, `title`, `date`, `excerpt`, `fullContent`, `readTime`, `category` |
-| `constants.js` | Site metadata | `CONTACT_INFO` (email, phone, location), `SOCIAL_LINKS` (linkedin, github, twitter), `CURRENT_YEAR` |
-
-**Lookup pattern:** Both `projects.js` and `blogPosts.js` export a `getBySlug()` helper function used by detail pages to match the `:slug` route param.
+**Static generation:** Detail pages use `generateStaticParams()` to pre-render all slug routes at build time.
 
 ### 4.2. Browser State
 
-**Name:** React State (in-memory)
+**Type:** React useState hooks (client components only)
 
-**Type:** React Context + useState hooks
+**Purpose:** Search filtering (projects, blog), category selection (blog sidebar), newsletter form input, theme preference.
 
-**Purpose:** Manages UI state (dark mode, search visibility, form data). No data persists across page refreshes — there is no `localStorage` or `sessionStorage` usage currently.
+**Persistence:** Theme choice persisted via `next-themes` (localStorage). All other state resets on navigation.
 
-## 5. External Integrations / APIs
+## 5. Design System
 
-**None currently.** The application is fully self-contained with no external API calls.
+### Color Palette
 
-**Planned / potential integrations:**
+Monochromatic only — no accent color. Hierarchy achieved through value contrast.
+
+| Token | Dark | Light |
+|-------|------|-------|
+| `--bg` | `#0a0a0a` | `#f5f5f5` |
+| `--surface` | `#111111` | `#ebebeb` |
+| `--border` | `#1a1a1a` | `#d4d4d4` |
+| `--border-hover` | `#2a2a2a` | `#b0b0b0` |
+| `--text-primary` | `#ffffff` | `#0a0a0a` |
+| `--text-secondary` | `#888888` | `#555555` |
+| `--text-muted` | `#555555` | `#888888` |
+| `--text-faint` | `#333333` | `#bbbbbb` |
+
+CSS custom properties defined in `src/app/globals.css` (`:root` for light, `.dark` for dark). Mapped to Tailwind color names in `tailwind.config.ts`.
+
+### Typography
+
+- **Headings/Labels/Mono:** IBM Plex Mono (400, 500, 600) via `next/font/google`
+- **Body:** System sans-serif (`-apple-system, Segoe UI, system-ui, sans-serif`)
+
+### Card System
+
+Shared pattern across all pages:
+- Background: `--surface`, Border: `1px solid --border`, Radius: `10px`
+- Hover: border transitions to `--border-hover` (300ms)
+- CTA variant: transparent background, dashed border
+
+### Navigation
+
+- **Header:** "EMMANUEL DIAZ" masthead (left) + social icons + theme toggle (right)
+- **PageTabs:** Sticky segmented control below header — EXPERIENCE / PROJECTS / BLOG
+- Active tab: `bg-bg` (blends with page), inactive: `bg-surface`
+
+## 6. External Integrations
+
+**None currently.** Fully self-contained.
 
 | Integration | Purpose | Status |
 |-------------|---------|--------|
-| Form submission service (e.g., Formspree, EmailJS) | Handle contact form submissions | TODO (see `ContactForm.js`) |
-| Headless CMS (e.g., Contentful, Sanity) | Manage blog/project content externally | Not planned |
-| Google Analytics / Plausible | Usage analytics | Not implemented |
+| Newsletter service (e.g., Buttondown, Mailchimp) | Handle email subscriptions | TODO — currently logs to console |
+| Analytics (e.g., Plausible, Vercel Analytics) | Usage tracking | Not implemented |
 
-## 6. Deployment & Infrastructure
+## 7. Deployment & Infrastructure
 
-**Cloud Provider:** Not yet configured for production deployment. The project produces a static `build/` directory suitable for any static host.
+**Static Export:** `npm run build` generates pre-rendered HTML/CSS/JS in `out/`. No server required.
 
-**Key Services Used:** Create React App's build toolchain (Webpack, Babel)
-
-**CI/CD Pipeline:** None configured. No `.github/workflows` or CI configuration files present.
-
-**Monitoring & Logging:**
-- `reportWebVitals.js` is integrated for client-side performance metrics (CLS, FID, FCP, LCP, TTFB) but currently only logs to console
-- No server-side monitoring (not applicable)
-
-**Build & Dev Commands:**
+**Commands:**
 
 | Command | Purpose |
 |---------|---------|
-| `npm start` | Dev server on `localhost:3000` |
-| `npm run build` | Production build to `build/` |
-| `npm test` | Jest tests (watch mode) |
-| `npm test -- --watchAll=false` | Jest single run |
+| `npm run dev` | Dev server on `localhost:3000` |
+| `npm run build` | Production build (static export to `out/`) |
+| `npm run start` | Serve production build locally |
 | `npm run lint` | ESLint check |
-| `npm run lint:fix` | ESLint auto-fix |
-| `npm run format` | Prettier format |
-| `npm run format:check` | Prettier check |
-| `npm run setup` | Nuclear reinstall (rm node_modules, clean cache, reinstall) |
 
-## 7. Security Considerations
+**CI/CD:** None configured. Manual deployment.
+
+## 8. Security Considerations
 
 **Authentication:** Not applicable (static site, no user accounts)
 
-**Authorization:** Not applicable
-
-**Data Encryption:** Standard HTTPS when deployed to a hosting provider with TLS
-
-**Key Security Practices:**
-- External links use `rel="noopener noreferrer"` to prevent tab-nabbing
-- Contact form includes client-side validation (email regex, required fields, minimum length)
+**Key Practices:**
+- External links use `target="_blank"` with `rel="noopener noreferrer"`
 - No sensitive data stored client-side
-- Content Security Policy and other HTTP headers depend on hosting configuration (not set at app level)
-- ESLint `jsx-a11y` plugin enforces accessibility best practices
+- Newsletter form has client-side email validation
+- CSP and HTTP headers depend on hosting configuration
 
-## 8. Development & Testing Environment
+## 9. Company Logos
 
-**Local Setup Instructions:** See `CONTRIBUTING.md`. Requires Node.js >= 14.17.0 (pinned in `.nvmrc`).
+Logo images go in `public/images/logos/`. Referenced by the `logo` field in `src/data/experience.ts`.
 
-**Testing Frameworks:**
-- **Jest** (via react-scripts) — test runner
-- **@testing-library/react** 13.4.0 — component rendering and queries
-- **@testing-library/jest-dom** 5.17.0 — custom DOM matchers
-- **@testing-library/user-event** 13.5.0 — user interaction simulation
-
-**Current test coverage:** Minimal — only `App.test.js` with 2 tests:
-1. Navigation elements render correctly (4 links)
-2. HomePage heading contains expected text
-
-**Code Quality Tools:**
-
-| Tool | Config file | Purpose |
-|------|-------------|---------|
-| ESLint | `.eslintrc.json` | Linting with react-app + jsx-a11y rules |
-| Prettier | `.prettierrc` | Formatting (single quotes, 100-char width, trailing commas ES5, semicolons, LF) |
-| jsx-a11y | via ESLint plugin | Accessibility rule enforcement (warnings) |
-
-**Key ESLint rules:**
-- `no-console: warn` (console.warn/error allowed)
-- `no-unused-vars: warn` (prefix with `_` to suppress)
-- `react/prop-types: off`
-
-## 9. Future Considerations / Roadmap
-
-- **localStorage persistence for dark mode:** The `useDarkMode` hook resets theme on page refresh. Adding `localStorage` read/write would preserve user preference.
-- **Real contact form submission:** Replace the simulated `setTimeout` in `ContactForm.js` with an actual API call (e.g., Formspree, EmailJS, or a custom backend endpoint).
-- **Replace placeholder images:** All project images use `via.placeholder.com` URLs. Replace with optimized real assets.
-- **Expand test coverage:** Add component-level tests for hooks (`useDarkMode`, `useSearch`), UI components, and page routing.
-- **Search results page:** Currently navigates directly to the first match. Consider a dedicated search results view with filtering.
-- **CI/CD pipeline:** Add GitHub Actions for automated linting, testing, and deployment on push.
-- **Dynamic meta tags per route:** Improve SEO with route-specific `<title>` and Open Graph tags (e.g., via `react-helmet`).
-- **Content management:** As content grows, consider migrating from static data files to a headless CMS.
-- **Analytics integration:** Add privacy-respecting analytics (e.g., Plausible, Fathom) for usage insights.
+- Format: PNG or SVG, square, optimized for 42x42px display
+- Fallback: Companies without a `logo` field display a monogram (initials in mono font)
+- Currently configured for: Rappi, Nubank, BlackRock, Daimler AG
 
 ## 10. Project Identification
 
 **Project Name:** Personal Portfolio Website
 
-**Repository URL:** https://github.com/EmmanuelDiaz95/personal-web.git
+**Repository:** https://github.com/EmmanuelDiaz95/personal-web.git
 
-**Primary Contact/Team:** Emmanuel Diaz
+**Owner:** Emmanuel Diaz
 
-**Date of Last Update:** 2026-03-09
-
-## 11. Glossary / Acronyms
-
-| Term | Definition |
-|------|------------|
-| **CRA** | Create React App — the React project bootstrapping tool used for this project |
-| **SPA** | Single Page Application — the app loads once and handles routing client-side |
-| **PWA** | Progressive Web App — the app includes a `manifest.json` for installability |
-| **Slug** | A URL-safe string identifier used in routes (e.g., `/projects/choice-empowers`) |
-| **Lazy Loading** | React.lazy() + Suspense pattern to code-split page components and reduce initial bundle size |
-| **Dark Mode** | Theme toggled via React Context; adds/removes `dark` class on `<html>` element |
-| **Tailwind CSS** | Utility-first CSS framework; all styling uses utility classes (no custom CSS files beyond directives) |
-| **Lucide** | Icon library (`lucide-react`) used for all SVG icons throughout the app |
-| **jsx-a11y** | ESLint plugin that enforces web accessibility best practices in JSX |
-| **Web Vitals** | Google's metrics for measuring real-world user experience (CLS, FID, FCP, LCP, TTFB) |
+**Date of Last Update:** 2026-03-10

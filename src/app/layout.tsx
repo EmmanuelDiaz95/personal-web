@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { IBM_Plex_Mono } from 'next/font/google';
 import { ThemeProvider } from 'next-themes';
 import Header from '@/components/layout/Header';
-import BottomNav from '@/components/layout/BottomNav';
+import PageTabs from '@/components/layout/PageTabs';
 import { SITE } from '@/data/constants';
 import './globals.css';
 
@@ -23,11 +23,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" suppressHydrationWarning className={ibmPlexMono.variable}>
       <body className="font-sans antialiased">
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
-          <div className="max-w-page mx-auto px-16 max-lg:px-10 max-md:px-5 pt-9 pb-24 min-h-screen">
+          <div className="max-w-page mx-auto px-16 max-lg:px-10 max-md:px-5 pt-9 pb-16 min-h-screen">
             <Header />
+            <PageTabs />
             <main>{children}</main>
           </div>
-          <BottomNav />
         </ThemeProvider>
       </body>
     </html>

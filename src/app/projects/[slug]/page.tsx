@@ -62,6 +62,32 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
         </div>
       )}
 
+      {(project.liveUrl || project.repoUrl) && (
+        <div className="flex gap-3 mb-8">
+          {project.liveUrl && (
+            <a
+              href={project.liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 font-mono text-xs tracking-wide bg-surface border border-border rounded-[8px] px-4 py-2.5 text-text-secondary hover:text-text-primary hover:border-border-hover transition-all duration-200"
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-green-500" />
+              Live Demo
+            </a>
+          )}
+          {project.repoUrl && (
+            <a
+              href={project.repoUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 font-mono text-xs tracking-wide bg-surface border border-border rounded-[8px] px-4 py-2.5 text-text-secondary hover:text-text-primary hover:border-border-hover transition-all duration-200"
+            >
+              GitHub
+            </a>
+          )}
+        </div>
+      )}
+
       <div className="flex gap-2 flex-wrap">
         {project.tags.map((tag) => (
           <TagPill key={tag} label={tag} />
