@@ -9,9 +9,11 @@ export interface Highlight {
   value: string;
 }
 
+export const currentlyReading = 'The Decision Book: Fifty Models for Strategic Thinking';
+
 export const highlights: Highlight[] = [
-  { label: 'Based in', value: 'Mexico City' },
-  { label: 'Countries', value: '8+' },
-  { label: 'Current obsession', value: 'Ultra trail running' },
+  { label: 'Based in', value: 'Mexico City but traveling a lot' },
+  { label: 'Current obsession', value: 'Ultra trail running & AI' },
+  { label: 'Currently reading', value: currentlyReading },
   { label: 'Languages', value: 'Spanish, English, Portuguese' },
 ];
