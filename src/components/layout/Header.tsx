@@ -12,10 +12,31 @@ function StravaIcon({ size = 18 }: { size?: number }) {
   );
 }
 
+function GoodreadsIcon({ size = 18 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+      <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+    </svg>
+  );
+}
+
+function SubstackIcon({ size = 18 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M4 4h16" />
+      <path d="M4 8h16" />
+      <path d="M4 12l8 6 8-6" />
+    </svg>
+  );
+}
+
 const socialLinks = [
   { href: SOCIAL.linkedin, icon: Linkedin, label: 'LinkedIn' },
   { href: SOCIAL.github, icon: Github, label: 'GitHub' },
   { href: SOCIAL.strava, icon: StravaIcon, label: 'Strava' },
+  { href: SOCIAL.goodreads, icon: GoodreadsIcon, label: 'Goodreads' },
+  { href: SOCIAL.substack, icon: SubstackIcon, label: 'Substack' },
 ];
 
 export default function Header() {
