@@ -9,7 +9,7 @@ export const SOCIAL = {
   github: 'https://github.com/EmmanuelDiaz95',
   strava: 'https://www.strava.com/athletes/emmanueldiaz',
   goodreads: 'https://www.goodreads.com/user/show/148211154-emmanuel-diaz',
-  substack: 'https://YOUR_SUBSTACK.substack.com',
+  substack: 'https://substack.com/@emmanueldc',
 };
 
 export const SITE = {
