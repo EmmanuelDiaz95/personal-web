@@ -8,7 +8,8 @@ import { CONTACT } from '@/data/constants';
 const navItems = [
   { href: '/', label: 'Experience' },
   { href: '/projects', label: 'Projects' },
-  { href: '/blog', label: 'Blog' },
+  // Blog hidden until ready — restore this entry to bring it back.
+  // { href: '/blog', label: 'Blog' },
 ];
 
 export default function BottomNav() {

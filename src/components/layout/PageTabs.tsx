@@ -8,7 +8,8 @@ const tabs = [
   { href: '/', label: 'ABOUT ME' },
   { href: '/experience', label: 'EXPERIENCE' },
   { href: '/projects', label: 'PROJECTS' },
-  { href: '/blog', label: 'BLOG' },
+  // Blog hidden until ready — restore this tab to bring it back.
+  // { href: '/blog', label: 'BLOG' },
 ];
 
 export default function PageTabs() {
