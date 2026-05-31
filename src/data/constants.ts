@@ -1,5 +1,5 @@
 export const CONTACT = {
-  email: 'emmanueldc95@hotmail.com',
+  email: 'emmanueldc95@gmail.com',
   phone: '+52 722 382 6544',
   location: 'Mexico City, Mexico',
 };
