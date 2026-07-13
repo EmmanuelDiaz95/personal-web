@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { bio, highlights } from '@/data/about';
 
 export default function AboutPage() {
@@ -10,11 +11,16 @@ export default function AboutPage() {
       </div>
 
       <div className="flex gap-10 max-md:flex-col mb-10">
-        {/* Photo placeholder */}
-        <div className="w-[220px] h-[220px] max-md:w-[180px] max-md:h-[180px] rounded-[10px] bg-surface border border-border flex items-center justify-center shrink-0 transition-all duration-300">
-          <span className="font-mono text-3xl font-semibold text-text-muted transition-colors duration-300">
-            ED
-          </span>
+        {/* Profile photo */}
+        <div className="w-[240px] max-md:w-[200px] max-md:mx-auto shrink-0">
+          <Image
+            src="/images/profile.jpg"
+            alt="Emmanuel Diaz"
+            width={768}
+            height={1024}
+            priority
+            className="w-full h-auto rounded-[10px] border border-border transition-colors duration-300"
+          />
         </div>
 
         {/* Bio */}
