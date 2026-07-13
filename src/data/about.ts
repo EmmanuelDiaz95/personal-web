@@ -7,13 +7,15 @@ export const bio = [
 export interface Highlight {
   label: string;
   value: string;
+  href?: string;
 }
 
-export const currentlyReading = 'El funcionamiento general del mundo';
+export const currentlyReading = 'La única historia';
+export const currentlyReadingUrl = 'https://www.goodreads.com/book/show/43909858';
 
 export const highlights: Highlight[] = [
   { label: 'Based in', value: 'Mexico City but traveling a lot' },
   { label: 'Current obsession', value: 'Ultra trail running & AI' },
-  { label: 'Currently reading', value: currentlyReading },
+  { label: 'Currently reading', value: currentlyReading, href: currentlyReadingUrl },
   { label: 'Languages', value: 'Spanish, English, Portuguese' },
 ];

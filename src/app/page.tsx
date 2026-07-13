@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { ArrowUpRight } from 'lucide-react';
 import { bio, highlights } from '@/data/about';
 
 export default function AboutPage() {
@@ -40,19 +41,43 @@ export default function AboutPage() {
 
       {/* Highlights */}
       <div className="grid grid-cols-4 max-lg:grid-cols-2 max-sm:grid-cols-1 gap-4">
-        {highlights.map((highlight) => (
-          <div
-            key={highlight.label}
-            className="bg-surface border border-border rounded-[10px] p-6 hover:border-border-hover transition-all duration-300"
-          >
-            <div className="font-mono text-[11px] tracking-[2px] text-text-muted uppercase mb-2 transition-colors duration-300">
-              {highlight.label}
+        {highlights.map((highlight) => {
+          const inner = (
+            <>
+              <div className="font-mono text-[11px] tracking-[2px] text-text-muted uppercase mb-2 transition-colors duration-300">
+                {highlight.label}
+              </div>
+              <div className="text-[17px] font-semibold flex items-start gap-1.5 transition-colors duration-300">
+                <span>{highlight.value}</span>
+                {highlight.href && (
+                  <ArrowUpRight
+                    size={15}
+                    className="mt-1 shrink-0 text-text-muted group-hover:text-text-primary transition-colors duration-300"
+                  />
+                )}
+              </div>
+            </>
+          );
+
+          return highlight.href ? (
+            <a
+              key={highlight.label}
+              href={highlight.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group bg-surface border border-border rounded-[10px] p-6 hover:border-border-hover transition-all duration-300"
+            >
+              {inner}
+            </a>
+          ) : (
+            <div
+              key={highlight.label}
+              className="bg-surface border border-border rounded-[10px] p-6 hover:border-border-hover transition-all duration-300"
+            >
+              {inner}
             </div>
-            <div className="text-[17px] font-semibold transition-colors duration-300">
-              {highlight.value}
-            </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );

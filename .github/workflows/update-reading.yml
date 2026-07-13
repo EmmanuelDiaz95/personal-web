@@ -1,0 +1,41 @@
+name: Update currently reading
+
+# Refreshes the "Currently reading" book from the Goodreads currently-reading
+# shelf once a week. If the book changed, commits the update to main, which
+# triggers a Railway redeploy. Can also be run on demand from the Actions tab.
+
+on:
+  schedule:
+    - cron: '0 12 * * 1' # Mondays at 12:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-reading:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Fetch latest book from Goodreads
+        run: node scripts/update-reading.js
+
+      - name: Commit if changed
+        run: |
+          if git diff --quiet -- src/data/about.ts; then
+            echo "No change to currently reading — nothing to commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/data/about.ts
+          BOOK=$(grep -oE "currentlyReading = '.*'" src/data/about.ts | head -1 | sed "s/currentlyReading = '//;s/'$//")
+          git commit -m "chore: update currently reading to \"$BOOK\""
+          git push
