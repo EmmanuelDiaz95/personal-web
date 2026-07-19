@@ -9,7 +9,7 @@ Personal portfolio website for Emmanuel Diaz — Finance Operations leader. Buil
 ## Development Commands
 
 - `npm run dev` — Dev server on localhost:3000
-- `npm run build` — Production build (static export)
+- `npm run build` — Production build (`.next/` server output)
 - `npm run start` — Serve production build
 - `npm run lint` — ESLint check
 
@@ -25,7 +25,7 @@ Next.js 14 with App Router. File-based routing under `src/app/`:
 - `/blog` — Blog with sidebar filters, categories, tags, newsletter
 - `/blog/[slug]` — Blog post detail page
 
-Static export (`output: 'export'` in `next.config.js`), deployable anywhere.
+Built as a Next.js server app (`next build` → `.next/`, served with `next start`) and deployed on Railway. No static export.
 
 ### Component Organization
 
