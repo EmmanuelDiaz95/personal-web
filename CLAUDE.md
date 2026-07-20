@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Personal portfolio website for Emmanuel Diaz — Finance Operations leader. Built with Next.js 14 (App Router) + TypeScript + Tailwind CSS. Monochromatic design system (black/grey/white) with dark/light mode toggle. Three pages: Experience (landing), Projects, Blog.
+Personal portfolio website for Emmanuel Diaz — Finance Operations leader. Built with Next.js 16 (App Router) + TypeScript + Tailwind CSS. Monochromatic design system (black/grey/white) with dark/light mode toggle. Three pages: Experience (landing), Projects, Blog.
 
 ## Development Commands
 
@@ -17,7 +17,7 @@ Personal portfolio website for Emmanuel Diaz — Finance Operations leader. Buil
 
 ### Framework & Routing
 
-Next.js 14 with App Router. File-based routing under `src/app/`:
+Next.js 16 with App Router. File-based routing under `src/app/`:
 
 - `/` — Experience page (landing) — stats, company cards
 - `/projects` — Projects grid with search and CTA
