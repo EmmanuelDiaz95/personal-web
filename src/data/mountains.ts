@@ -3,7 +3,7 @@
 
 export const mountainsIntro = [
   'The mountains are where I\'m happiest. There\'s a specific clarity that only shows up a few thousand meters up — usually when everything hurts and the view makes it irrelevant.',
-  'I chase that feeling wherever I can find it: an overnight climb up Acatenango watching Fuego erupt through the dark, a high push toward Iztaccíhuatl, whatever\'s next on the list. Nature and a little suffering — that\'s the whole draw.',
+  'It\'s a hobby I plan to keep at for a long time — always chasing the next summit and new mountains to explore.',
 ];
 
 export interface Climb {
@@ -24,6 +24,14 @@ export const climbs: Climb[] = [
     location: 'Guatemala',
     gainM: 2032,
     detail: 'Summited 3,976 m — overnight climb facing the eruptions of Volcán de Fuego.',
+  },
+  {
+    date: '2024-11-10',
+    dateLabel: 'Nov 2024',
+    name: 'Nevado de Toluca',
+    location: 'Mexico',
+    gainM: 1128,
+    detail: 'Summited Pico del Fraile at 4,690 m — Mexico\'s fourth-highest peak.',
   },
   {
     date: '2026-04-03',
