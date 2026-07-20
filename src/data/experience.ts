@@ -7,7 +7,7 @@ export interface Company {
   monogram: string;
 }
 
-export const profileSummary = 'Finance operations leader with 7+ years building treasury and finance systems from scratch at high-growth startups across Latin America. Comfortable owning the full finance ops stack in fast-moving environments where structure doesn\'t exist yet.';
+export const profileSummary = 'Technology-driven finance leader with 7+ years across financial operations, treasury, FP&A, financial modeling, and capital markets — building lean teams and smart systems that replace manual work with AI-powered automation. Lately that\'s meant building product from scratch — AI agents, treasury systems, and capital-markets software — alongside teams that innovate and ship high-quality products fast.';
 
 export const companies: Company[] = [
   { name: 'Cascade Debt', role: 'Capital Markets Ops Manager', period: '2025 \u2013 Present', summary: 'Master-servicing implementation for international lending facilities across Mexico, Indonesia, and North America.', logo: '/images/logos/cascade.png', monogram: 'CD' },
