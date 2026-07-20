@@ -3,8 +3,8 @@ import type { Company } from '@/data/experience';
 
 export default function CompanyCard({ company }: { company: Company }) {
   return (
-    <div className="bg-surface border border-border rounded-[10px] p-7 hover:border-border-hover transition-all duration-300 cursor-default">
-      <div className="flex items-center gap-3.5 mb-4">
+    <div className="bg-surface border border-border rounded-[10px] p-5 hover:border-border-hover transition-all duration-300 cursor-default">
+      <div className="flex items-center gap-3.5 mb-3">
         <div className="w-[42px] h-[42px] rounded-[10px] bg-logo-bg border border-logo-border flex items-center justify-center overflow-hidden shrink-0 transition-all duration-300">
           {company.logo ? (
             <Image
@@ -30,7 +30,7 @@ export default function CompanyCard({ company }: { company: Company }) {
         {company.countries && ` · ${company.countries}`}
       </div>
       {company.summary && (
-        <p className="text-[13px] text-text-muted leading-[1.6] mt-3 transition-colors duration-300">
+        <p className="text-[13px] text-text-muted leading-[1.55] mt-2.5 transition-colors duration-300">
           {company.summary}
         </p>
       )}

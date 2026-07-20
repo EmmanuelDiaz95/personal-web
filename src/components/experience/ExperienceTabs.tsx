@@ -18,7 +18,7 @@ const TABS: { id: TabId; label: string }[] = [
 
 function Narrative({ paragraphs }: { paragraphs: string[] }) {
   return (
-    <div className="flex flex-col gap-4 mb-9">
+    <div className="flex flex-col gap-4 mb-6">
       {paragraphs.map((p, i) => (
         <p
           key={i}
@@ -100,7 +100,7 @@ export default function ExperienceTabs() {
       {/* Secondary sub-navigation */}
       <div
         role="tablist"
-        className="flex gap-7 max-sm:gap-6 border-b border-border mb-8 overflow-x-auto"
+        className="flex gap-7 max-sm:gap-6 border-b border-border mb-8 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       >
         {TABS.map((t) => {
           const isActive = active === t.id;
@@ -129,7 +129,7 @@ export default function ExperienceTabs() {
       {active === 'professional' && (
         <div>
           <Narrative paragraphs={[profileSummary]} />
-          <div className="grid grid-cols-3 max-lg:grid-cols-2 max-sm:grid-cols-1 gap-4 mb-4">
+          <div className="grid grid-cols-3 max-lg:grid-cols-2 max-sm:grid-cols-1 gap-3.5 mb-4">
             {companies.map((company) => (
               <CompanyCard key={company.name} company={company} />
             ))}
