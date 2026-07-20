@@ -25,7 +25,10 @@ export default function CompanyCard({ company }: { company: Company }) {
         </span>
       </div>
       <div className="text-[17px] font-semibold mb-1 transition-colors duration-300">{company.name}</div>
-      <div className="text-sm text-text-secondary transition-colors duration-300">{company.role}</div>
+      <div className="text-sm text-text-secondary transition-colors duration-300">
+        {company.role}
+        {company.countries && ` · ${company.countries}`}
+      </div>
       {company.summary && (
         <p className="text-[13px] text-text-muted leading-[1.6] mt-3 transition-colors duration-300">
           {company.summary}

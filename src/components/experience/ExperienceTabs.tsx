@@ -18,7 +18,7 @@ const TABS: { id: TabId; label: string }[] = [
 
 function Narrative({ paragraphs }: { paragraphs: string[] }) {
   return (
-    <div className="flex flex-col gap-4 max-w-[720px] mb-9">
+    <div className="flex flex-col gap-4 mb-9">
       {paragraphs.map((p, i) => (
         <p
           key={i}
