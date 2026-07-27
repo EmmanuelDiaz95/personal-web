@@ -13,118 +13,143 @@ export const blogPosts: BlogPost[] = [
   {
     slug: 'building-my-own-ultra-training-tracker',
     title: 'I Built My Own Ultra Training Tracker Because Strava Wasn\'t Enough',
-    date: 'March 15, 2026',
-    excerpt: 'How a finance ops guy with no CS degree built a full-stack PWA — from Python CLI to live dashboard with Garmin sync — to stay honest during a 30-week ultramarathon training block.',
-    content: `I'm training for the Ultra Trail Tarahumara — a 59km race through the Copper Canyons in October. 30 weeks of structured training. And the first thing I did wasn't lace up my shoes. It was open a terminal.
+    date: 'July 26, 2026',
+    excerpt: 'Five rebuilds of the tracker I use to stay honest in a 30-week ultra block — Python CLI to PWA to LLM coach to Postgres — including the two months it quietly stopped telling me the truth.',
+    content: `I signed up for a 59-kilometer race through the Copper Canyons of Chihuahua, and the first thing I did wasn't lace up my shoes. It was open a terminal.
 
-Here's the thing: I already had Garmin. I already had Strava. But neither of them could answer the question I actually cared about — am I following the plan?
+What came out of that is a training tracker I've now rebuilt five times across a 30-week plan. It went quietly broken for two months in the middle, which turned out to be the most useful thing that happened to it. This is the log of all five versions, including the one that failed.
 
-Not "how far did I run today." Not "what's my VO2 max estimate." I needed something that would look at my training plan, look at what I actually did, and tell me where I'm falling short. So I built it.
+![Where it ended up: one compliance score, four metrics measured against plan, and the next four weeks waiting. Every version below was working toward this screen.](/images/blog/ultra-tracker/dashboard-week-view.webp)
 
-THE PROBLEM WITH EXISTING TOOLS
+## The question no tool would answer
 
-My coach and I put together a 30-week plan with specific weekly targets: distance, vertical gain, long run distance, gym sessions, and interval work (tempo, hills, fartlek — rotating each week). The plan has three phases — Base (weeks 1-12), Specific (13-27), and Taper (28-30) — with recovery weeks every fourth week where volume drops 25-30%.
+I already had Garmin. I already had Strava. Neither could answer the only question I actually cared about: am I following the plan?
 
-Strava can tell me I ran 26km this week. But it can't tell me that my plan called for 27km, that I hit 715m of vert against a 400m target (not bad), and that my long run ratio is sitting at 53% of weekly volume when it probably shouldn't exceed 30%.
+Not "how far did I run today." Not "what's my VO2 max estimate." My coach and I had built a 30-week plan with specific weekly targets — distance, vertical gain, long run distance, gym sessions, and interval work rotating between tempo, hills, and fartlek. Three phases: Base for weeks 1 through 12, Specific for 13 through 27, Taper for the last three. Every fourth week is a recovery week where volume drops 25 to 30 percent.
 
-Garmin Connect is better at the data side but still doesn't know what my plan says. And none of these tools have any concept of compliance scoring or alerts.
+Strava can tell me I ran 26km this week. It can't tell me the plan called for 27, that I hit 715m of vert against a 400m target, and that my long run was sitting at 53% of my weekly volume when it probably shouldn't clear 30%.
 
-PHASE 1: THE CLI
+So I built the thing that could.
 
-The first version was pure terminal. Three Python scripts:
+## v1 — the CLI
 
-python scripts/sync.py pulls activities from Garmin Connect using their API, caching everything as JSON. Authentication was the most annoying part — Garmin's OAuth flow is... let's call it "character-building." I used the garminconnect library with garth token persistence so I only log in once.
+The first version took a weekend and never left the terminal. Three Python scripts.
 
-python scripts/report.py --week 1 loads the plan, loads cached activities, classifies each one (run, gym, or other), aggregates totals, and generates a markdown report with a compliance score.
+\`sync.py\` pulls activities from Garmin Connect and caches them. Authentication was the worst part by a wide margin. Garmin's OAuth flow is what I'd generously call character-building; I ended up on the garminconnect library with garth handling token persistence so I only log in once.
 
-python scripts/status.py gives a quick dashboard — current week, phase, days until race, this week's targets.
+\`report.py\` loads the plan, loads the activities, classifies each one as run, gym, or other, and scores the week.
 
-Here's what Week 1 looked like:
+\`status.py\` answers "where am I" in one screen. It still does — this is it partway through the block:
 
-| Metric        | Planned | Actual | Delta   |
-|:--------------|--------:|-------:|:--------|
-| Distance (km) |      27 |   26.3 | -2.6%   |
-| Vert (m)      |     400 |    715 | +78.8%  |
-| Long Run (km) |      14 |     14 | +0.0%   |
-| Gym Sessions  |       3 |      5 | +2      |
+\`\`\`console
+==================================================
+  TARAHUMARA ULTRA TRACKER
+==================================================
 
-Compliance Score: 99%
+  Race:  Ultra Trail Tarahumara 59km
+  Date:  2026-10-02  (68 days away)
+  Goal:  59km / 2400m D+
 
-Not bad for week one. But the system also flagged an alert: my long run (14km) was 53% of my total weekly distance. Way above the 30% threshold. The system caught it before I could lie to myself about it.
+  Current Week:  21 / 30
+  Progress:      [##############------] 70%
+  Dates:         2026-07-20 to 2026-07-26
+  Phase:         SPECIFIC
+  Recovery Week: No
+  Weeks Left:    9
+\`\`\`
 
-THE ALERT ENGINE
+Week 1 scored 99%. Distance 26.3 against 27 planned, vert 715 against 400, long run 14 on the nose, five gym sessions against three. Good week.
 
-Six rules that check my training against both the plan and my own historical data:
+It also threw an alert. That 14km long run was 53% of my total weekly distance, way past the 30% threshold. The system caught it before I could talk myself out of noticing.
 
-HR Drift — If my easy runs are averaging more than 10bpm above my 4-week rolling average, something is off. Either I'm not recovering or I'm running "easy" runs too hard (which, honestly, I am — my Z2 target is 125-145 but I keep showing up at 153-163).
+Six rules do that work. **HR drift** fires if my easy runs average more than 10bpm above their four-week rolling average — either I'm not recovering or I'm running easy runs too hard, and honestly it's usually the second one. My Z2 target is 125–145 and I keep turning up at 153–163. **Volume spike** flags unplanned jumps over 10% week on week. **Long run ratio** is the one that got me in week 1. **Missed gym** and **missed series** catch planned work that didn't happen. **Recovery week check** makes sure volume actually drops at least 20% when it's supposed to.
 
-Volume Spike — Flags if actual distance jumps more than 10% above the previous week unexpectedly. The 10% rule exists for a reason.
+One detail I'm still pleased with: the long run alert is weekend-aware. Long runs land on Saturday or Sunday, so the rule doesn't fire until the weekend is over. No false alarms on a Wednesday.
 
-Long Run Ratio — That 53% flag from week one. Keeps me from making my long run too large a percentage of my weekly volume.
+Detecting interval work from raw Garmin data needed a heuristic. If the gap between average and max heart rate is 20+ bpm and max cleared 160, it was probably intervals. Short runs under 10km with an average above 155 count too. Not perfect. Good enough.
 
-Missed Gym / Missed Series — If I planned 3 gym sessions and only did 1, it shows up as a warning. Same for interval work.
+## v2 — the dashboard
 
-Recovery Week Check — During recovery weeks, volume should drop at least 20%. If it doesn't, the system warns me I'm not actually recovering.
+The CLI worked and I still couldn't check my training while waiting for coffee. So: a web dashboard, one HTML file, embedded CSS, vanilla JS, no build step.
 
-One detail I'm proud of: the long run alert is weekend-aware. Since long runs are always on Saturday or Sunday, the alert only fires after the weekend ends. No more false alarms on a Wednesday.
+A compliance ring for the number that matters. Metric cards for actual against planned. A 30-week volume chart with planned in grey and actual in copper, so the whole arc of the block is visible at once. Activity cards. The same six alerts, rendered inline.
 
-SERIES DETECTION
+Behind it, a Python \`http.server\` with two endpoints — one to read cached weeks, one to sync.
 
-How do you automatically detect whether someone did interval work from raw Garmin data? I went with a heuristic: if the gap between average and max heart rate is 20+ bpm AND max HR hit 160+, it was probably intervals. Also catches short runs (<10km) with high average HR (155+). Not perfect, but it works.
+Getting it onto my phone for real was the hard part. Garmin blocks authentication from datacenter IPs, which should have killed the idea of deploying it anywhere. The way through: seed the OAuth tokens from my laptop as base64 environment variables. The server decodes them on boot, and token *refresh*, unlike full login, works from any IP.
 
-PHASE 2: THE DASHBOARD
+Then the security pass, which turned out to be its own project. API key auth on sync, a 60-second rate limit, XSS escaping on everything rendered, input validation, dotfile blocking, and a sanitization layer that strips location names out of Garmin's payloads before they reach the browser. Raw Garmin JSON carries GPS coordinates, your home city, device identifiers. None of that belongs in a public API response.
 
-The CLI worked. But I wanted to check my training from my phone while waiting for coffee, not just at my laptop. So I built a web dashboard.
+## v3 — the coach
 
-It's a single-file PWA — one HTML file with embedded CSS and vanilla JS. No React, no build step. The aesthetic is dark and topographic-inspired, matching the trail running theme. It features:
+Scores tell you what happened. They don't tell you what to do about it.
 
-A compliance ring — the big number that tells me immediately how the week went.
+So the next version added a coach: a rule engine that reads multi-week trends, scores readiness using acute-to-chronic workload ratio, and recommends plan adjustments. Then a language model on top of it, with one hard rule about the division of labor — **the rules decide, the model only writes**. Claude Haiku takes the engine's verdict and turns it into a sentence. It never computes the verdict itself. A coach that hallucinates your training load is worse than no coach.
 
-Metric cards — actual vs. planned for distance, vertical gain, long run, and gym sessions. Each with a progress bar and delta indicator.
+A keyword classifier routes questions to the right place: data lookups, coaching judgment, general knowledge. On the web side, FastAPI replaced the bare \`http.server\`, and the coach became a chat drawer streaming over SSE with the last 20 exchanges carried along for continuity.
 
-A 30-week volume chart — every week of the plan visualized with planned (grey) and actual (copper) bars. You can see the whole arc of the training block at a glance.
+## v4 — Postgres
 
-Activity cards — each workout from Garmin, formatted with date, type, distance, pace, heart rate, and elevation.
+JSON files ran out in two directions at once.
 
-Smart alerts — the same alert engine from the CLI, but rendered inline with the week view.
+Daily health data was the first. Sleep, HRV, resting heart rate, body battery, training readiness, stress — a row per day, growing forever, and a coach that ought to be reading it.
 
-The backend is a Python HTTP server (no framework, just http.server) that serves static files and exposes two API endpoints: GET /api/weeks for cached data and POST /api/sync to pull fresh data from Garmin.
+The second was worse. My plan needed to change, and I needed to know *why* it changed three weeks later. A JSON file you edit in place has no memory of the edit.
 
-PHASE 3: GOING LIVE
+So: Postgres, six tables — activities, daily health, conversations, week snapshots, the training plan itself, and a plan_changes audit log. Every plan edit writes a row saying what changed and what changed it. The plan stopped being a file I owned and became data the system owned.
 
-I wanted this on my phone. For real. Not "open laptop, run server, load localhost." Tap an icon and see my training.
+## The two months it lied to me
 
-The PWA bits were straightforward — manifest.json, a service worker for offline caching, an SVG icon with a trail runner silhouette. The harder part was deployment.
+On May 4, syncing stopped. I found out on June 27.
 
-Garmin's API blocks authentication from datacenter IPs. So I couldn't just deploy to Railway and have it sync directly... or could I? The trick was seeding OAuth tokens from my local machine as base64 environment variables. The server decodes them on startup, and token refresh (unlike full login) works from any IP. If the tokens eventually expire, I run one command locally and push fresh ones.
+The cause was a deadlock of my own making. I'd added a cooldown to respect Garmin's rate limits, and stored it globally — so a single 429 locked out every client, including the healthy ones. Worse, the auto-sync only ever looked at the current week. Once it fell behind, it had no mechanism to catch up. It wasn't failing loudly. It was returning last month's numbers with total confidence.
 
-The security hardening was its own project: API key authentication for sync, rate limiting (60s cooldown), XSS escaping on all user content, input validation, dotfile blocking, and a sanitization layer that strips location names from Garmin activity data before it reaches the browser. The raw Garmin JSON contains GPS coordinates, home city names, device IDs — none of that belongs in a public API response.
+I wasn't looking, either. I was travelling, then I was injured, and the training I didn't want to look at was exactly the training the dashboard wasn't recording. Two blind spots that happened to line up.
 
-The live dashboard: https://web-production-565ec.up.railway.app
-Source code: https://github.com/EmmanuelDiaz95/trail-running-coach
+Here's the part that stung. I built this thing specifically so I couldn't hide from my training. Then it went quiet, and its silence let me hide anyway.
 
-THE HONEST PART
+Fixing the auth deadlock took an afternoon. Backfilling weeks 10 through 17 took one command. Rebuilding trust in the number on the screen took longer, and the lesson underneath is one I'd now take over any amount of uptime: **a system that fails loudly is worth more than a system that's usually right.** Confident wrong output is the most expensive kind.
 
-The dashboard doesn't let me hide. Week 2's compliance score stares at me every time I open the app. Some weeks will be great. Some weeks life will happen. The point isn't perfection — it's awareness. Having the data right there, in a format I can't ignore, changes how I think about consistency.
+The plan needed rebuilding too. The version I'd written in March assumed a fitness I no longer had, so weeks 18 through 30 were recalculated from where I actually was — peak week 48km, longest run 32km — and the reason was written into the audit log. That's what the plan_changes table was for. I just didn't expect the first real entry to be that one.
 
-That 5% week? It's still in the chart. It'll always be in the chart. And week 3 was better because of it.
+## v5 — teaching it to heal
 
-WHAT I LEARNED
+The current version starts from the assumption that syncing will fail, because it did.
 
-I'm a finance operations guy, not a software engineer. This project taught me:
+There's a set of pure functions that answer one question: what's missing? Which training weeks have no activities, which days have no health record. They're pure, so they're trivial to test, and they run before anything touches the network. The refresh engine takes that gap list and fills it — backfilling weeks, backing off when Garmin pushes back, and reporting exactly what it repaired.
 
-OAuth is a maze. Garmin's implementation doubly so. Token persistence and refresh logic took longer than the entire alert engine.
+All of it sits behind one command:
 
-PWAs are underrated. One HTML file, a manifest, and a service worker — and suddenly you have an installable app with offline support and no app store.
+\`\`\`console
+python coach.py checkin
+\`\`\`
 
-Security is a mindset. It's not a checkbox at the end. Every API response, every user input, every environment variable is a surface to think about.
+That's the whole interface now. It fills the gaps, then reads me back a single verdict merging health signals — HRV, resting heart rate, sleep — with training load. One front door instead of five scripts I had to remember the order of.
 
-Ship, then improve. The CLI version took a weekend. The dashboard took another weekend. Each layer made the previous one more useful. I didn't need to plan the whole thing upfront.
+The whole thing runs on Railway on a daily schedule. 143 tests keep it honest.
 
-28 weeks to go. 59 kilometers through the Copper Canyons. One JSON file, one dashboard, and zero excuses.`,
-    readTime: '10 min read',
+## How it fits together
+
+Five rebuilds later, this is the shape of it:
+
+\`\`\`diagram
+\`\`\`
+
+The boundary between stages 03 and 04 is the design decision I'd defend hardest. People hear "AI coach" and assume a model was trained on my training data. Nothing was trained. The rule engine computes the verdict in ordinary, testable Python, and the model is handed that verdict along with the current context and asked only to write it up like a coach would. A model that hallucinates your training load is worse than no coach at all — so it never gets to decide anything.
+
+## What five rebuilds taught me
+
+I'm a finance operations guy, not a software engineer. Five versions in, the thing I keep coming back to isn't a framework.
+
+Every layer was only obvious after I'd shipped the one before it. I couldn't have designed the alert engine before living with raw numbers for a month. I couldn't have designed the health tables before the alerts made me want data they didn't have. And I'd never have built the gap detectors if the sync hadn't lied to me for two months first. Planning it upfront wouldn't have made it better. It would have made it wrong earlier, in more detail.
+
+The bad weeks are all still in the chart. They don't come out. That's the entire point.
+
+[Live dashboard](https://web-production-565ec.up.railway.app) · [Source](https://github.com/EmmanuelDiaz95/trail-running-coach)
+`,
+    readTime: '8 min read',
     category: 'Projects',
-    tags: ['Python', 'PWA', 'running', 'health', 'Garmin API'],
+    tags: ['Python', 'FastAPI', 'Postgres', 'PWA', 'running', 'Garmin API'],
   },
   {
     slug: 'intersection-urban-design-technology',
