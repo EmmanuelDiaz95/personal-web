@@ -39,6 +39,7 @@ function GoalCard() {
   useEffect(() => {
     const race = new Date(`${goal.date}T00:00:00`).getTime();
     const days = Math.ceil((race - Date.now()) / 86_400_000);
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setDaysToGo(Math.max(0, days));
   }, []);
 
