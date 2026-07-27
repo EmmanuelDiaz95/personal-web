@@ -10,8 +10,8 @@ export interface Highlight {
   href?: string;
 }
 
-export const currentlyReading = 'La única historia';
-export const currentlyReadingUrl = 'https://www.goodreads.com/book/show/43909858';
+export const currentlyReading = 'La piedra de la locura';
+export const currentlyReadingUrl = 'https://www.goodreads.com/book/show/59080630';
 
 export const highlights: Highlight[] = [
   { label: 'Based in', value: 'Mexico City but traveling a lot' },
