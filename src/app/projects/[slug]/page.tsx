@@ -44,24 +44,6 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
         </div>
       </div>
 
-      <div className="text-[15px] text-text-secondary leading-relaxed mb-8 whitespace-pre-line transition-colors duration-300">
-        {project.fullDescription}
-      </div>
-
-      {project.outcomes.length > 0 && (
-        <div className="mb-8">
-          <div className="font-mono text-[11px] tracking-[2px] text-text-muted mb-4">OUTCOMES</div>
-          <ul className="space-y-2">
-            {project.outcomes.map((outcome) => (
-              <li key={outcome} className="text-sm text-text-secondary flex items-start gap-2">
-                <span className="text-text-muted mt-0.5">—</span>
-                {outcome}
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-
       {project.writeupSlug && (
         <Link
           href={`/blog/${project.writeupSlug}`}
@@ -85,6 +67,24 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
             className="text-text-muted ml-auto shrink-0 self-center group-hover:translate-x-0.5 transition-transform duration-200"
           />
         </Link>
+      )}
+
+      <div className="text-[15px] text-text-secondary leading-relaxed mb-8 whitespace-pre-line transition-colors duration-300">
+        {project.fullDescription}
+      </div>
+
+      {project.outcomes.length > 0 && (
+        <div className="mb-8">
+          <div className="font-mono text-[11px] tracking-[2px] text-text-muted mb-4">OUTCOMES</div>
+          <ul className="space-y-2">
+            {project.outcomes.map((outcome) => (
+              <li key={outcome} className="text-sm text-text-secondary flex items-start gap-2">
+                <span className="text-text-muted mt-0.5">—</span>
+                {outcome}
+              </li>
+            ))}
+          </ul>
+        </div>
       )}
 
       {(project.liveUrl || project.repoUrl) && (

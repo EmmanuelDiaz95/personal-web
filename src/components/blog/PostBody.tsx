@@ -5,6 +5,14 @@ import ArchitectureDiagram from './ArchitectureDiagram';
 import Figure from './Figure';
 import TerminalBlock from './TerminalBlock';
 
+/** Minimal shape of the hast nodes react-markdown hands to each component. */
+interface MdNode {
+  type?: string;
+  tagName?: string;
+  value?: string;
+  children?: MdNode[];
+}
+
 /** Collapses a React child tree down to its plain text, for fenced code blocks. */
 function toText(node: ReactNode): string {
   if (node === null || node === undefined || typeof node === 'boolean') return '';
@@ -32,17 +40,15 @@ export default function PostBody({ content }: { content: string }) {
           h3: ({ children }) => (
             <h3 className="mt-9 mb-3 text-[16px] font-semibold text-text-primary">{children}</h3>
           ),
-          p: ({ children }) => {
-            // A lone image becomes a <figure>, which cannot legally nest in a <p>.
-            const only = Children.toArray(children).filter(
-              (c) => !(typeof c === 'string' && c.trim() === '')
+          p: ({ node, children }) => {
+            // A lone image becomes a <figure>, which cannot legally nest in a <p>
+            // and would fail hydration. Inspect the markdown node rather than the
+            // rendered child: by this point the child is the `img` mapping, not Figure.
+            const kids = ((node as unknown as MdNode | undefined)?.children ?? []).filter(
+              (c) => !(c.type === 'text' && !(c.value ?? '').trim())
             );
-            if (
-              only.length === 1 &&
-              isValidElement<{ src?: string }>(only[0]) &&
-              only[0].type === Figure
-            ) {
-              return <>{only[0]}</>;
+            if (kids.length === 1 && kids[0].tagName === 'img') {
+              return <>{children}</>;
             }
             return <p className="mb-6">{children}</p>;
           },
