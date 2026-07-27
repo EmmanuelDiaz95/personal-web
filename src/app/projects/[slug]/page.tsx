@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, ArrowRight, BookOpen } from 'lucide-react';
 import { projects, getProjectBySlug } from '@/data/projects';
 import StatusBadge from '@/components/ui/StatusBadge';
 import TagPill from '@/components/ui/TagPill';
@@ -60,6 +60,31 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
             ))}
           </ul>
         </div>
+      )}
+
+      {project.writeupSlug && (
+        <Link
+          href={`/blog/${project.writeupSlug}`}
+          className="group flex items-start gap-4 mb-8 bg-surface border border-border rounded-[10px] p-5 hover:border-border-hover transition-all duration-200"
+        >
+          <BookOpen size={18} className="text-text-muted mt-0.5 shrink-0" />
+          <div>
+            <div className="font-mono text-[11px] tracking-[2px] text-text-muted mb-2">
+              READ THE WRITE-UP
+            </div>
+            <div className="text-sm text-text-primary mb-1">
+              How I built it, across five rebuilds
+            </div>
+            <div className="text-[13px] text-text-secondary leading-relaxed">
+              The full story — Python CLI to PWA to LLM coach to Postgres, including the two months
+              it quietly stopped telling me the truth.
+            </div>
+          </div>
+          <ArrowRight
+            size={16}
+            className="text-text-muted ml-auto shrink-0 self-center group-hover:translate-x-0.5 transition-transform duration-200"
+          />
+        </Link>
       )}
 
       {(project.liveUrl || project.repoUrl) && (

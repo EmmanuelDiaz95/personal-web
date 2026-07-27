@@ -14,6 +14,8 @@ export interface Project {
   outcomes: string[];
   liveUrl?: string;
   repoUrl?: string;
+  /** Slug of a blog post writing this project up in depth. */
+  writeupSlug?: string;
 }
 
 export const projects: Project[] = [
@@ -37,6 +39,7 @@ export const projects: Project[] = [
     ],
     liveUrl: 'https://web-production-565ec.up.railway.app',
     repoUrl: 'https://github.com/EmmanuelDiaz95/trail-running-coach',
+    writeupSlug: 'building-my-own-ultra-training-tracker',
   },
 ];
 
