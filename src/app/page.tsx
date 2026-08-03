@@ -13,7 +13,10 @@ export default function AboutPage() {
 
       <div className="flex gap-10 max-md:flex-col mb-10">
         {/* Profile photo */}
-        <div className="w-[240px] max-md:w-[200px] max-md:mx-auto shrink-0">
+        {/* Fluid below md so the photo scales with the phone rather than sitting
+            at a fixed 200px. The 3:4 ratio is preserved by w-full h-auto on the
+            768x1024 source, so 80% is a width choice, not a crop. */}
+        <div className="w-[240px] max-md:w-[80%] max-md:mx-auto shrink-0">
           <Image
             src="/images/profile.jpg"
             alt="Emmanuel Diaz"
