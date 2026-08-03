@@ -3,6 +3,7 @@ import { IBM_Plex_Mono } from 'next/font/google';
 import { ThemeProvider } from 'next-themes';
 import Header from '@/components/layout/Header';
 import PageTabs from '@/components/layout/PageTabs';
+import Footer from '@/components/layout/Footer';
 import { SITE } from '@/data/constants';
 import './globals.css';
 
@@ -27,6 +28,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <Header />
             <PageTabs />
             <main>{children}</main>
+            <Footer />
           </div>
         </ThemeProvider>
       </body>
