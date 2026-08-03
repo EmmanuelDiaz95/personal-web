@@ -11,12 +11,15 @@ export default function AboutPage() {
         </h1>
       </div>
 
-      <div className="flex gap-10 max-md:flex-col mb-10">
+      {/* Below md this drops out of flex to a block box so the photo can float
+          and the bio can wrap around it. A flex container would be pushed aside
+          by the float whole rather than flowing around it. */}
+      <div className="flex gap-10 max-md:block mb-10">
         {/* Profile photo */}
-        {/* Fluid below md so the photo scales with the phone, capped at the
-            desktop width. The 3:4 source means width drives height, so an
-            uncapped percentage gets tall fast and pushes the bio off screen. */}
-        <div className="w-[240px] max-md:w-[60%] max-md:max-w-[240px] max-md:mx-auto shrink-0">
+        {/* Floated left on mobile with the bio running alongside, then under.
+            Width is a deliberate compromise: every pixel here comes straight
+            out of the text measure beside it. */}
+        <div className="w-[240px] shrink-0 max-md:float-left max-md:w-[45%] max-md:max-w-[170px] max-md:mr-5 max-md:mb-2">
           <Image
             src="/images/profile.jpg"
             alt="Emmanuel Diaz"
@@ -27,12 +30,12 @@ export default function AboutPage() {
           />
         </div>
 
-        {/* Bio */}
-        <div className="flex flex-col gap-4">
+        {/* Bio — block below md so its line boxes shorten around the float. */}
+        <div className="flex flex-col gap-4 max-md:block">
           {bio.map((paragraph, i) => (
             <p
               key={i}
-              className={`text-[17px] leading-[1.7] transition-colors duration-300 ${
+              className={`text-[17px] leading-[1.7] transition-colors duration-300 max-md:mb-4 ${
                 i === 0 ? 'text-text-primary font-medium' : 'text-text-secondary'
               }`}
             >
@@ -43,7 +46,9 @@ export default function AboutPage() {
       </div>
 
       {/* Highlights */}
-      <div className="grid grid-cols-4 max-lg:grid-cols-2 max-sm:grid-cols-1 gap-4">
+      {/* clear-both so the floated photo can never spill into this grid if the
+          bio is ever shortened below the photo's height. */}
+      <div className="grid grid-cols-4 max-lg:grid-cols-2 max-sm:grid-cols-1 gap-4 max-md:clear-both">
         {highlights.map((highlight) => {
           const inner = (
             <>
