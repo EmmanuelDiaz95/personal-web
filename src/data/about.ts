@@ -10,8 +10,8 @@ export interface Highlight {
   href?: string;
 }
 
-export const currentlyReading = 'La piedra de la locura';
-export const currentlyReadingUrl = 'https://www.goodreads.com/book/show/59080630';
+export const currentlyReading = 'How to Take Smart Notes: One Simple Technique to Boost Writing, Learning and Thinking';
+export const currentlyReadingUrl = 'https://www.goodreads.com/book/show/228378911';
 
 export const highlights: Highlight[] = [
   { label: 'Based in', value: 'Mexico City but traveling a lot' },
