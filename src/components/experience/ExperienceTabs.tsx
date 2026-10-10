@@ -1,11 +1,11 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { cn } from '@/lib/utils';
 import CompanyCard from '@/components/ui/CompanyCard';
 import LogRow from '@/components/ui/LogRow';
 import { profileSummary, companies, earlierRoles } from '@/data/experience';
-import { runningIntro, races, goal } from '@/data/running';
+import { runningIntro, races } from '@/data/running';
 import { mountainsIntro, climbs } from '@/data/mountains';
 
 type TabId = 'professional' | 'running' | 'mountains';
@@ -31,70 +31,11 @@ function Narrative({ paragraphs }: { paragraphs: string[] }) {
   );
 }
 
-function GoalCard() {
-  const [daysToGo, setDaysToGo] = useState<number | null>(null);
-
-  // Computed after mount so the count stays accurate and doesn't cause a
-  // server/client hydration mismatch.
-  useEffect(() => {
-    const race = new Date(`${goal.date}T00:00:00`).getTime();
-    const days = Math.ceil((race - Date.now()) / 86_400_000);
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setDaysToGo(Math.max(0, days));
-  }, []);
-
-  const figures = [
-    { value: goal.distanceKm.toString(), unit: 'km', label: 'Distance' },
-    { value: goal.vertM.toLocaleString(), unit: 'm', label: 'Vert' },
-    {
-      value: daysToGo === null ? '—' : daysToGo.toString(),
-      unit: 'days',
-      label: 'To go',
-    },
-  ];
-
-  return (
-    <div className="border border-border rounded-[10px] bg-surface p-6 mb-9 transition-colors duration-300">
-      <div className="flex items-start justify-between gap-8 max-sm:flex-col max-sm:gap-5">
-        <div className="min-w-0">
-          <div className="font-mono text-[11px] tracking-[2px] uppercase text-text-muted transition-colors duration-300">
-            Current goal · In training
-          </div>
-          <div className="text-[20px] font-semibold mt-1.5 transition-colors duration-300">
-            {goal.name}
-          </div>
-          <div className="text-sm text-text-secondary mt-1 transition-colors duration-300">
-            {goal.location} · {goal.dateLabel}
-          </div>
-        </div>
-
-        <div className="flex gap-8 max-sm:gap-6 shrink-0">
-          {figures.map((f) => (
-            <div key={f.label} className="text-right max-sm:text-left">
-              <div className="whitespace-nowrap">
-                <span className="font-mono text-[26px] max-sm:text-[22px] font-semibold leading-none text-text-primary transition-colors duration-300">
-                  {f.value}
-                </span>
-                <span className="font-mono text-[12px] text-text-muted ml-1 transition-colors duration-300">
-                  {f.unit}
-                </span>
-              </div>
-              <div className="font-mono text-[10px] tracking-[1.5px] uppercase text-text-faint mt-1 transition-colors duration-300">
-                {f.label}
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-}
-
 export default function ExperienceTabs() {
   const [active, setActive] = useState<TabId>('professional');
 
   const maxDist = Math.max(...races.map((r) => r.distanceKm));
-  const maxGain = Math.max(...climbs.map((c) => c.gainM));
+  const maxHigh = Math.max(...climbs.map((c) => c.highPointM));
 
   return (
     <div>
@@ -143,7 +84,6 @@ export default function ExperienceTabs() {
 
       {active === 'running' && (
         <div>
-          <GoalCard />
           <Narrative paragraphs={runningIntro} />
           <div className="font-mono text-[11px] tracking-[2px] uppercase text-text-muted mb-1 transition-colors duration-300">
             Race log
@@ -177,11 +117,11 @@ export default function ExperienceTabs() {
                 key={`${c.date}-${c.name}`}
                 eyebrow={`${c.dateLabel} · ${c.location}`}
                 title={c.name}
-                detail={c.detail}
-                figure={c.gainM.toLocaleString()}
+                detail={`${c.gainM.toLocaleString()} m vert · ${c.detail}`}
+                figure={c.highPointM.toLocaleString()}
                 unit="m"
-                figureLabel="Vert gain"
-                barPct={c.gainM / maxGain}
+                figureLabel="High point"
+                barPct={c.highPointM / maxHigh}
               />
             ))}
           </div>
