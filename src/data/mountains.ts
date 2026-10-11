@@ -10,7 +10,8 @@ export interface Climb {
   date: string; // ISO, for sorting
   dateLabel: string; // display
   name: string;
-  location: string;
+  location: string; // country name — the flag's tooltip / accessible label
+  flag: string; // country flag emoji, shown in place of the name
   highPointM: number; // official height when summited, otherwise the watch's high point
   gainM: number; // vertical gain
   detail: string; // one-line honest description (summit / approach, etc.)
@@ -23,6 +24,7 @@ export const climbs: Climb[] = [
     dateLabel: 'Sep 2026',
     name: 'Chimborazo',
     location: 'Ecuador',
+    flag: '🇪🇨',
     highPointM: 5305,
     gainM: 460,
     detail: 'From the Carrel refuge past Whymper, on Ecuador\'s highest volcano. My highest point yet.',
@@ -32,6 +34,7 @@ export const climbs: Climb[] = [
     dateLabel: 'Sep 2026',
     name: 'Cotopaxi',
     location: 'Ecuador',
+    flag: '🇪🇨',
     highPointM: 4874,
     gainM: 241,
     detail: 'Acclimatization hike to the José Rivas refuge, below the glacier.',
@@ -41,6 +44,7 @@ export const climbs: Climb[] = [
     dateLabel: 'Nov 2024',
     name: 'Nevado de Toluca',
     location: 'Mexico',
+    flag: '🇲🇽',
     highPointM: 4690,
     gainM: 1128,
     detail: 'Summited Pico del Fraile, Mexico\'s fourth-highest peak.',
@@ -50,6 +54,7 @@ export const climbs: Climb[] = [
     dateLabel: 'Sep 2026',
     name: 'Rumiñahui',
     location: 'Ecuador',
+    flag: '🇪🇨',
     highPointM: 4549,
     gainM: 762,
     detail: 'Acclimatization climb on the jagged volcano across the valley from Cotopaxi.',
@@ -59,6 +64,7 @@ export const climbs: Climb[] = [
     dateLabel: 'Apr 2026',
     name: 'Iztaccíhuatl',
     location: 'Mexico',
+    flag: '🇲🇽',
     highPointM: 4458,
     gainM: 884,
     detail: 'High-altitude acclimatization hike from Amecameca.',
@@ -68,6 +74,7 @@ export const climbs: Climb[] = [
     dateLabel: 'May 2026',
     name: 'Acatenango',
     location: 'Guatemala',
+    flag: '🇬🇹',
     highPointM: 3976,
     gainM: 2032,
     detail: 'Overnight summit facing the eruptions of Volcán de Fuego.',
@@ -77,6 +84,7 @@ export const climbs: Climb[] = [
     dateLabel: 'Sep 2026',
     name: 'Quilotoa',
     location: 'Ecuador',
+    flag: '🇪🇨',
     highPointM: 3878,
     gainM: 378,
     detail: 'Down to the crater lagoon and back up the rim.',

@@ -115,7 +115,19 @@ export default function ExperienceTabs() {
             {climbs.map((c) => (
               <LogRow
                 key={`${c.date}-${c.name}`}
-                eyebrow={`${c.dateLabel} · ${c.location}`}
+                eyebrow={
+                  <>
+                    {c.dateLabel} ·{' '}
+                    <span
+                      role="img"
+                      aria-label={c.location}
+                      title={c.location}
+                      className="inline-block align-middle text-[15px] leading-none tracking-normal -mt-[3px]"
+                    >
+                      {c.flag}
+                    </span>
+                  </>
+                }
                 title={c.name}
                 detail={`${c.gainM.toLocaleString()} m vert · ${c.detail}`}
                 figure={c.highPointM.toLocaleString()}

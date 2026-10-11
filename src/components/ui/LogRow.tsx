@@ -1,5 +1,7 @@
+import type { ReactNode } from 'react';
+
 export interface LogRowProps {
-  eyebrow: string;
+  eyebrow: ReactNode;
   title: string;
   detail?: string;
   figure: string;
