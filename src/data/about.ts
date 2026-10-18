@@ -1,7 +1,7 @@
 export const bio = [
-  'Hey! Thanks for taking the time and the interest to get to know me better. Whether it\'s for professional or personal reasons, I hope you find something interesting, and if you do, let\'s connect!',
-  'I consider myself a philomath, a lifelong learner and very much a self-taught-through-experience type of person. From learning to code and creating AI agents that automate manual tasks and build entire teams, to figuring out how to create products in one of the most complex financial industries, to making apps for trail runners. The thread is always learning by doing. I\'ve built finance teams across 10+ countries including LatAm, Asia, and Europe, and shipped tools used by teams at BlackRock, Nubank, Rappi, and Cascade Debt.',
-  'I like to read, hike, and run mountains. I\'m happiest when nature and adventure is involved!',
+  'Hey! I\'m Emmanuel. I\'m a philomath, a lifelong learner, very much a self-taught type of person.',
+  'I learned to code back when AI wasn\'t a thing yet. Since then I\'ve built finance teams in 10+ countries across LatAm, Asia and Europe, launched products in private credit, treasury and finance ops automation, and shipped tools that teams at BlackRock, Nubank and Rappi use. Lately I spend my time building AI agents to automate the stuff I used to do by hand, and apps for trail running.',
+  'Outside of work I read, hike, and run ultras. I\'m happiest when there\'s mountains involved. If any of that sounds like your thing, say hi.',
 ];
 
 export interface Highlight {
