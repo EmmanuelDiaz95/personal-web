@@ -8,8 +8,6 @@ export interface Company {
   monogram: string;
 }
 
-export const profileSummary = 'Technology-driven finance leader with 7+ years across financial operations, treasury, FP&A, financial modeling, and capital markets — building lean teams and smart systems that replace manual work with AI-powered automation. Lately that\'s meant building product from scratch — AI agents, treasury systems, and capital-markets software — alongside teams that innovate and ship high-quality products fast.';
-
 export const companies: Company[] = [
   { name: 'Cascade Debt', role: 'Capital Markets Ops Manager', countries: '7+ countries', period: '2025 \u2013 Present', summary: 'Master-servicing implementation for international lending facilities across Mexico, Indonesia, and North America.', logo: '/images/logos/cascade.png', monogram: 'CD' },
   { name: 'Vaas', role: 'Ops & Implementations Manager', countries: '2 countries', period: '2024 \u2013 2025', summary: 'Owned finance, then operations and client implementations end-to-end.', logo: '/images/logos/vaas.png', monogram: 'V' },

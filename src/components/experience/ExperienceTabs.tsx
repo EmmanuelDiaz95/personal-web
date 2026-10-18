@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { cn } from '@/lib/utils';
 import CompanyCard from '@/components/ui/CompanyCard';
 import LogRow from '@/components/ui/LogRow';
-import { profileSummary, companies, earlierRoles } from '@/data/experience';
+import { companies, earlierRoles } from '@/data/experience';
 import { runningIntro, races } from '@/data/running';
 import { mountainsIntro, climbs } from '@/data/mountains';
 
@@ -70,7 +70,6 @@ export default function ExperienceTabs() {
 
       {active === 'professional' && (
         <div>
-          <Narrative paragraphs={[profileSummary]} />
           <div className="grid grid-cols-3 max-lg:grid-cols-2 max-sm:grid-cols-1 gap-3.5 mb-4">
             {companies.map((company) => (
               <CompanyCard key={company.name} company={company} />
