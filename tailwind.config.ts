@@ -1,4 +1,5 @@
 import type { Config } from 'tailwindcss';
+import plugin from 'tailwindcss/plugin';
 
 const config: Config = {
   content: [
@@ -31,7 +32,13 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    // A real hover (mouse/trackpad), regardless of screen width — tablets are wide
+    // but touch-only. Keep in sync with the same query in globals.css.
+    plugin(({ addVariant }) => {
+      addVariant('can-hover', '@media (hover: hover) and (pointer: fine)');
+    }),
+  ],
 };
 
 export default config;

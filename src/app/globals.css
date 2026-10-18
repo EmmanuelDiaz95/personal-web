@@ -41,3 +41,85 @@
     transition: background-color 0.3s ease, color 0.3s ease;
   }
 }
+
+/* CompanyCard highlights — the layouts are in the component; this is the motion.
+   Touch: each highlight rises in as it scrolls into view. Scroll-driven, so a
+   browser without it just shows them. */
+@layer components {
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .highlight-item {
+        animation: highlight-rise linear both;
+        animation-timeline: view();
+        animation-range: entry 20% cover 30%;
+      }
+    }
+  }
+
+  /* Mouse/trackpad: front and panel share one grid cell, so the card is as tall
+     as the taller of the two; the panel waits below, clipped, until hover/focus.
+     Same query as the `can-hover` variant in tailwind.config.ts. */
+  @media (hover: hover) and (pointer: fine) {
+    .highlight-item {
+      animation: none;
+    }
+
+    .highlight-card {
+      display: grid;
+      overflow: hidden;
+    }
+
+    .highlight-front,
+    .highlight-panel {
+      grid-area: 1 / 1;
+    }
+
+    .highlight-front {
+      transition: opacity 300ms ease, transform 420ms cubic-bezier(0.2, 0.7, 0.2, 1);
+    }
+
+    .highlight-panel {
+      transform: translateY(101%);
+      transition: transform 420ms cubic-bezier(0.2, 0.7, 0.2, 1);
+    }
+
+    /* The short delay keeps a mouse sweeping across the grid from flipping every card. */
+    .highlight-card:hover .highlight-front,
+    .highlight-card:focus-visible .highlight-front {
+      opacity: 0;
+      transform: translateY(-12px);
+      transition-delay: 100ms;
+    }
+
+    .highlight-card:hover .highlight-panel,
+    .highlight-card:focus-visible .highlight-panel {
+      transform: none;
+      transition-delay: 100ms;
+    }
+  }
+
+  /* Reduced motion: a plain crossfade, nothing moves. */
+  @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: reduce) {
+    .highlight-front {
+      transform: none !important;
+    }
+
+    .highlight-panel {
+      transform: none;
+      opacity: 0;
+      transition: opacity 200ms ease;
+    }
+
+    .highlight-card:hover .highlight-panel,
+    .highlight-card:focus-visible .highlight-panel {
+      opacity: 1;
+    }
+  }
+}
+
+@keyframes highlight-rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
